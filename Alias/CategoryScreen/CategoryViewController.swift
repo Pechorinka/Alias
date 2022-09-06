@@ -10,9 +10,9 @@ import UIKit
 class CategoryViewController: CustomViewController {
 
     override var nameViewControler: String { "КАТЕГОРИИ" }
-    private var categoryView = CategoryView()
+    private lazy var categoryView = CategoryView()
 
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,10 +25,8 @@ class CategoryViewController: CustomViewController {
             self.categoryView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             self.categoryView.topAnchor.constraint(equalTo: self.customNavigationBarView.bottomAnchor, constant: 5)
         ])
-
     }
-    
-
 
 
 }
+
