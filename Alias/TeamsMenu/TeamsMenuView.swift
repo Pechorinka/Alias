@@ -42,6 +42,7 @@ class TeamsMenuView: UIView {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(didTapMinusButton), for: .touchUpInside)
         btn.isUserInteractionEnabled = true
+        btn.startAnimatingPressActions()
 
         return btn
     }()
@@ -55,6 +56,7 @@ class TeamsMenuView: UIView {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(didTapPlusButton), for: .touchUpInside)
         btn.isUserInteractionEnabled = true
+        btn.startAnimatingPressActions()
 
         return btn
     }()
@@ -68,6 +70,7 @@ class TeamsMenuView: UIView {
         btn.layer.cornerRadius = 16
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        btn.startAnimatingPressActions()
         return btn
     }()
     
