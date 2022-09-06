@@ -55,8 +55,6 @@ class JokeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
-        let color = #colorLiteral(red: 0.9877986312, green: 0.7217630744, blue: 1, alpha: 1)
-        //UIColor(named: "RoyalBlueColor")
         setupUI()
 
 

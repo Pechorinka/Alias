@@ -81,7 +81,6 @@ class TeamsMenuViewController: CustomViewController {
             
             let vc = DifficultyPageViewController()
             vc.teams = self.teams
-            print("Our Teams \(self.teams)")
             self.navigationController?.pushViewController(vc, animated: true)
 
             self.musicManager.playSound(soundName: "Transition")

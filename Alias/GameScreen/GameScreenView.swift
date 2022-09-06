@@ -20,7 +20,6 @@ class GameScreenView: UIView {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         formatter.locale = Locale.current
-//        formatter.maximumFractionDigits = 2
         
         return formatter
     }()
@@ -70,19 +69,22 @@ class GameScreenView: UIView {
         return stack
     }()
     
+    // Лейбл для слова
     private(set) lazy var gameWordLabel: UILabel = {
         let label = UILabel()
         label.text = self.round.currentWord
         label.textColor = .black
-        label.font = UIFont(name: "Phosphate-Solid", size: 24)
+        label.font = UIFont(name: "Phosphate-Solid", size: 44)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.minimumScaleFactor = 1
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     // Картинка карточки (игровое поле)
     private lazy var gameImage: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "Carts"))
+        let image = UIImageView(image: UIImage(named: "imageForWord"))
         image.addSubview(self.gameWordLabel)
         return image
     }()
@@ -135,44 +137,30 @@ class GameScreenView: UIView {
         return stack
     }()
     
+    // MARK: - Initialization
+    
     init(round: GameRound) {
         self.round = round
-        
         super .init(frame: .zero)
         
         self.setupUI()
+        gestureObserver()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc private func rightAnswer(){
-        self.rightButtonTap?()
+    private func gestureObserver() {
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(elementSwippedLeft(gesture:)))
+        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
+        self.addGestureRecognizer(swipeLeft)
+        
+        let swipeLeft1 = UISwipeGestureRecognizer(target: self, action: #selector(elementSwippedRight(gesture:)))
+        swipeLeft1.direction = UISwipeGestureRecognizer.Direction.right
+        self.addGestureRecognizer(swipeLeft1)
     }
-    
-    @objc private func wrongAnswer(){
-        self.wrongButtonTap?()
-    }
-    
-    @objc private func backButtonFunc() {
-        self.backButtonTap?()
-    }
-    
-//    @objc func startTimer(){
-//        if seconds > 0 {
-//            seconds -= 1
-//            self.secondsLabel.text = String(seconds)
-//        }
-//        if seconds == 5 {
-//            self.musicManager.playSound(soundName: "Last 5 sec")
-//        }
-//        if seconds == 0 {
-//            self.openScore?()
-//            self.musicManager.playSound(soundName: "Start Timer")
-//            timer.invalidate()
-//        }
-//    }
     
     private func setupUI() {
         
@@ -198,6 +186,61 @@ class GameScreenView: UIView {
             self.rightAnswerBtn.heightAnchor.constraint(equalToConstant: 108)
         ])
     }
+    
+    private func addTimer(interval: Double){
+        Timer.scheduledTimer(timeInterval: interval, target: self,
+                             selector: #selector(updateTimer),
+                             userInfo: nil, repeats: false)
+    }
+    
+    private func addAnimation(duration: Double, backgroundColor: UIColor) {
+        UIView.animate(withDuration: duration, delay: 0.0, options:[.autoreverse], animations: {
+            self.backgroundColor = backgroundColor
+        }, completion:nil)
+    }
+    
+    // MARK: - Actions
+    
+    @objc private func rightAnswer(){
+        
+        gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
+        addAnimation(duration: 0.1, backgroundColor: .green)
+        addTimer(interval: 0.1)
+        self.rightButtonTap?()
+    }
+    
+    @objc private func wrongAnswer(){
+        
+        gameImage.swipeAnimation(transition: CATransitionSubtype.fromRight)
+        addAnimation(duration: 0.1, backgroundColor: .red)
+        addTimer(interval: 0.1)
+        self.wrongButtonTap?()
+    }
+    
+    @objc private func backButtonFunc() {
+        self.backButtonTap?()
+    }
+    
+    @objc func updateTimer(){
+        self.backgroundColor = .white
+    }
+    
+    @objc func elementSwippedRight(gesture: UIGestureRecognizer) {
+        
+        gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
+        addAnimation(duration: 0.1, backgroundColor: .green)
+        addTimer(interval: 0.1)
+        rightButtonTap?()
+        
+    }
+    
+    @objc func elementSwippedLeft(gesture: UIGestureRecognizer) {
+        
+        gameImage.swipeAnimation(transition: CATransitionSubtype.fromRight)
+        addAnimation(duration: 0.1, backgroundColor: .red)
+        addTimer(interval: 0.1)
+        wrongButtonTap?()
+    }
 }
 
 private extension GameScreenView {
@@ -210,5 +253,20 @@ private extension GameScreenView {
         btn.clipsToBounds = true
         btn.setImage(UIImage(systemName: image), for: .normal)
         return btn
+    }
+}
+
+    // MARK: - Extension for animation
+private extension UIView {
+    func swipeAnimation(duration: TimeInterval = 0.5, completionDelegate: AnyObject? = nil, transition: CATransitionSubtype) {
+
+        let leftToRightTransition = CATransition()
+        leftToRightTransition.type = CATransitionType.push
+        leftToRightTransition.subtype = transition
+        leftToRightTransition.duration = duration
+        leftToRightTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        leftToRightTransition.fillMode = CAMediaTimingFillMode.removed
+        
+        self.layer.add(leftToRightTransition, forKey: "leftToRightTransition")
     }
 }
