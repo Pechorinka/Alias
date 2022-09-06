@@ -168,7 +168,7 @@ class GameScreenView: UIView {
         addSubview(self.contentStack)
         
         self.addSubview(self.backButton)
-        
+
         NSLayoutConstraint.activate([
             
             self.backButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 24),
@@ -187,33 +187,35 @@ class GameScreenView: UIView {
         ])
     }
     
-    private func addTimer(interval: Double){
-        Timer.scheduledTimer(timeInterval: interval, target: self,
-                             selector: #selector(updateTimer),
-                             userInfo: nil, repeats: false)
-    }
-    
-    private func addAnimation(duration: Double, backgroundColor: UIColor) {
-        UIView.animate(withDuration: duration, delay: 0.0, options:[.autoreverse], animations: {
+    private func addBackgroundAnimation(duration: Double, backgroundColor: UIColor) {
+        UIView.animate(withDuration: duration, delay: 0.0, animations: {
             self.backgroundColor = backgroundColor
-        }, completion:nil)
+        }, completion: { _ in
+            self.backgroundColor = .white
+        })
     }
     
     // MARK: - Actions
     
     @objc private func rightAnswer(){
+//
+//
+//        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear]) {
+//            self.gameImage.transform = CGAffineTransform(rotationAngle: -100)
+//        } completion: { _ in
+//            self.gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
+//            self.gameImage.transform = .identity
+//        }
         
         gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
-        addAnimation(duration: 0.1, backgroundColor: .green)
-        addTimer(interval: 0.1)
+        addBackgroundAnimation(duration: 0.3, backgroundColor: .green)
         self.rightButtonTap?()
     }
     
     @objc private func wrongAnswer(){
         
         gameImage.swipeAnimation(transition: CATransitionSubtype.fromRight)
-        addAnimation(duration: 0.1, backgroundColor: .red)
-        addTimer(interval: 0.1)
+        addBackgroundAnimation(duration: 0.1, backgroundColor: .red)
         self.wrongButtonTap?()
     }
     
@@ -221,15 +223,10 @@ class GameScreenView: UIView {
         self.backButtonTap?()
     }
     
-    @objc func updateTimer(){
-        self.backgroundColor = .white
-    }
-    
     @objc func elementSwippedRight(gesture: UIGestureRecognizer) {
         
         gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
-        addAnimation(duration: 0.1, backgroundColor: .green)
-        addTimer(interval: 0.1)
+        addBackgroundAnimation(duration: 0.1, backgroundColor: .green)
         rightButtonTap?()
         
     }
@@ -237,8 +234,7 @@ class GameScreenView: UIView {
     @objc func elementSwippedLeft(gesture: UIGestureRecognizer) {
         
         gameImage.swipeAnimation(transition: CATransitionSubtype.fromRight)
-        addAnimation(duration: 0.1, backgroundColor: .red)
-        addTimer(interval: 0.1)
+        addBackgroundAnimation(duration: 0.1, backgroundColor: .red)
         wrongButtonTap?()
     }
 }
@@ -258,7 +254,7 @@ private extension GameScreenView {
 
     // MARK: - Extension for animation
 private extension UIView {
-    func swipeAnimation(duration: TimeInterval = 0.5, completionDelegate: AnyObject? = nil, transition: CATransitionSubtype) {
+    func swipeAnimation(duration: TimeInterval = 0.3, transition: CATransitionSubtype) {
 
         let leftToRightTransition = CATransition()
         leftToRightTransition.type = CATransitionType.push
@@ -266,7 +262,7 @@ private extension UIView {
         leftToRightTransition.duration = duration
         leftToRightTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         leftToRightTransition.fillMode = CAMediaTimingFillMode.removed
-        
+
         self.layer.add(leftToRightTransition, forKey: "leftToRightTransition")
     }
 }
