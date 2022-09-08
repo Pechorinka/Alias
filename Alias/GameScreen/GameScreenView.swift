@@ -1,7 +1,8 @@
 
 import UIKit
 
-class GameScreenView: UIView {
+final class GameScreenView: UIView {
+    
     var rightButtonTap: (() -> Void)?
     var wrongButtonTap: (() -> Void)?
     var backButtonTap: (() -> Void)?
@@ -151,15 +152,17 @@ class GameScreenView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Private methods
+    
     private func gestureObserver() {
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(elementSwippedLeft(gesture:)))
         swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
         self.addGestureRecognizer(swipeLeft)
         
-        let swipeLeft1 = UISwipeGestureRecognizer(target: self, action: #selector(elementSwippedRight(gesture:)))
-        swipeLeft1.direction = UISwipeGestureRecognizer.Direction.right
-        self.addGestureRecognizer(swipeLeft1)
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(elementSwippedRight(gesture:)))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.addGestureRecognizer(swipeRight)
     }
     
     private func setupUI() {
@@ -168,7 +171,7 @@ class GameScreenView: UIView {
         addSubview(self.contentStack)
         
         self.addSubview(self.backButton)
-
+        
         NSLayoutConstraint.activate([
             
             self.backButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 24),
@@ -198,14 +201,14 @@ class GameScreenView: UIView {
     // MARK: - Actions
     
     @objc private func rightAnswer(){
-//
-//
-//        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear]) {
-//            self.gameImage.transform = CGAffineTransform(rotationAngle: -100)
-//        } completion: { _ in
-//            self.gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
-//            self.gameImage.transform = .identity
-//        }
+        //
+        //
+        //        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear]) {
+        //            self.gameImage.transform = CGAffineTransform(rotationAngle: -100)
+        //        } completion: { _ in
+        //            self.gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
+        //            self.gameImage.transform = .identity
+        //        }
         
         gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
         addBackgroundAnimation(duration: 0.3, backgroundColor: .green)
@@ -223,7 +226,7 @@ class GameScreenView: UIView {
         self.backButtonTap?()
     }
     
-    @objc func elementSwippedRight(gesture: UIGestureRecognizer) {
+    @objc private func elementSwippedRight(gesture: UIGestureRecognizer) {
         
         gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
         addBackgroundAnimation(duration: 0.1, backgroundColor: .green)
@@ -231,13 +234,15 @@ class GameScreenView: UIView {
         
     }
     
-    @objc func elementSwippedLeft(gesture: UIGestureRecognizer) {
+    @objc private func elementSwippedLeft(gesture: UIGestureRecognizer) {
         
         gameImage.swipeAnimation(transition: CATransitionSubtype.fromRight)
         addBackgroundAnimation(duration: 0.1, backgroundColor: .red)
         wrongButtonTap?()
     }
 }
+
+// MARK: - Extensions
 
 private extension GameScreenView {
     
@@ -252,17 +257,16 @@ private extension GameScreenView {
     }
 }
 
-    // MARK: - Extension for animation
 private extension UIView {
     func swipeAnimation(duration: TimeInterval = 0.3, transition: CATransitionSubtype) {
-
-        let leftToRightTransition = CATransition()
-        leftToRightTransition.type = CATransitionType.push
-        leftToRightTransition.subtype = transition
-        leftToRightTransition.duration = duration
-        leftToRightTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        leftToRightTransition.fillMode = CAMediaTimingFillMode.removed
-
-        self.layer.add(leftToRightTransition, forKey: "leftToRightTransition")
+        
+        let swipeTransition = CATransition()
+        swipeTransition.type = CATransitionType.push
+        swipeTransition.subtype = transition
+        swipeTransition.duration = duration
+        swipeTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        swipeTransition.fillMode = CAMediaTimingFillMode.removed
+        
+        self.layer.add(swipeTransition, forKey: "leftToRightTransition")
     }
 }
