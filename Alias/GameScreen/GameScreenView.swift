@@ -96,6 +96,7 @@ final class GameScreenView: UIView {
     private lazy var rightAnswerBtn: UIButton = {
         self.rightButton = makeButton(color: "TrefoilCrayolaColor", image: "checkmark")
         self.rightButton.addTarget(self, action: #selector(rightAnswer), for: .touchUpInside)
+        self.rightButton.startAnimatingPressActions()
         return rightButton
     }()
     
@@ -105,6 +106,7 @@ final class GameScreenView: UIView {
     private lazy var wrongAnswerBtn: UIButton = {
         self.wrongButton = makeButton(color: "SignalOrangeColor", image: "multiply")
         self.wrongButton.addTarget(self, action: #selector(wrongAnswer), for: .touchUpInside)
+        self.wrongButton.startAnimatingPressActions()
         return wrongButton
     }()
     

@@ -25,11 +25,14 @@ class MyCustomBackButton: UIButton {
         let image = UIImage(systemName: "chevron.left", withConfiguration: configuration)
         self.setImage(image, for: .normal)
         self.tintColor = .black
+
         if #available(iOS 15.0, *) {
             self.configuration?.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         } else {
             self.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         }
+        self.startAnimatingPressActions()
+
     }
 
     func addShadowWithColor(_ color: UIColor, radius:CGFloat, offset:CGSize, opacity:Float) {
