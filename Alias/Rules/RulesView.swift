@@ -20,7 +20,7 @@ class RulesView: UIView {
     private lazy var backButton: MyCustomBackButton = {
         let btn = MyCustomBackButton()
         btn.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
-        
+    
         return btn
     }()
     
