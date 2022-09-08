@@ -153,10 +153,10 @@
 		38C8AA8A28C7C9E6007EFB12 /* CategoryScreen */ = {
 			isa = PBXGroup;
 			children = (
+				77448CDE289229F90040A442 /* DifficultyPage */,
 				38C8AA8F28C7CDAE007EFB12 /* CategoryViewController.swift */,
 				38C8AA8628C7B8A3007EFB12 /* CategoryView.swift */,
 				38C8AA8828C7BA6D007EFB12 /* CategoryCell.swift */,
-				77448CDE289229F90040A442 /* DifficultyPage */,
 			);
 			path = CategoryScreen;
 			sourceTree = "<group>";

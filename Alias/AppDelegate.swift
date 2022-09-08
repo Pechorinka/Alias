@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //        window?.rootViewController = AppNavigationController(rootViewController: StartMenuViewController())
 
-        window?.rootViewController = AppNavigationController(rootViewController: ResultScreenViewController(finalists: [Team(name: "jdgdjgn", scores: 20)]))
+        window?.rootViewController = AppNavigationController(rootViewController: DifficultyPageViewController())
         window?.makeKeyAndVisible()
         
         return true

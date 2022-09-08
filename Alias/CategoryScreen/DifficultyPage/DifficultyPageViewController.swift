@@ -60,10 +60,12 @@ extension DifficultyPageViewController: TapButtonDelegate {
     }
 
     func didMakeChoice() {
-        let vc = ScoreViewController(
-            teams: self.teams,
-            gameWords: self.gameWords
-        )
+//        let vc = ScoreViewController(
+//            teams: self.teams,
+//            gameWords: self.gameWords
+//        )
+
+        let vc = CategoryViewController()
         
         navigationController?.pushViewController(vc, animated: true)
     }

@@ -9,6 +9,8 @@ import UIKit
 
 final class CategoryView: UIView {
 
+    var categories = ["","","","","",""]
+
 
     private lazy var categoryTableView: UITableView = {
         let tableView = UITableView(frame: self.bounds, style: .plain)
@@ -64,7 +66,7 @@ extension CategoryView: UITableViewDataSource {
 //        return 10
 //    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return categories.count
     }
 //    func numberOfSections(in tableView: UITableView) -> Int {
 //        return 6
@@ -79,6 +81,7 @@ extension CategoryView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
 
     }
 
