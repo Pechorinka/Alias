@@ -34,9 +34,7 @@ final class CategoryView: UIView {
 
 
     private func setView() {
-        [
-            self.categoryTableView
-        ].forEach { self.addSubview($0) }
+       self.addSubview( self.categoryTableView)
 
         NSLayoutConstraint.activate([
             self.categoryTableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
@@ -51,6 +49,9 @@ final class CategoryView: UIView {
 
 extension CategoryView: UITableViewDataSource {
 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categories.count
+    }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
@@ -59,19 +60,8 @@ extension CategoryView: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        return 200
     }
-
-//    internal func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 10
-//    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
-    }
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 6
-//    }
-
 
 }
 
@@ -82,6 +72,17 @@ extension CategoryView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
+        if let cell = tableView.cellForRow(at: indexPath) as? CategoryCell {
+//            cell.baseView.layer.borderWidth = 5
+//            cell.baseView.layer.borderColor = UIColor(named: "RoyalBlueColor")?.cgColor
+
+            cell.tapGradient()
+
+//            DispatchQueue.main.asyncAfter(deadline: .now()+0.15) {
+//                cell.baseView.layer.borderWidth = 0
+//
+//            }
+        }
 
     }
 
