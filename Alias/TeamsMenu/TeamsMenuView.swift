@@ -44,6 +44,7 @@ class TeamsMenuView: UIView {
         btn.layer.cornerRadius = 16
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        btn.startAnimatingPressActions()
         return btn
     }()
     

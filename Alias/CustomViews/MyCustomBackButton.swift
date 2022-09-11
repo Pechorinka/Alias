@@ -26,6 +26,7 @@ class MyCustomBackButton: UIButton {
         self.setImage(image, for: .normal)
         self.tintColor = .black
         self.configuration?.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
+        self.startAnimatingPressActions()
     }
 
     func addShadowWithColor(_ color: UIColor, radius:CGFloat, offset:CGSize, opacity:Float) {
