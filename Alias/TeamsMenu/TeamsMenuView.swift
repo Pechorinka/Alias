@@ -35,6 +35,7 @@ class TeamsMenuView: UIView {
          return tableView
      } ()
     
+
     private lazy var nextButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .black
