@@ -104,6 +104,29 @@ class CategoryCell: UITableViewCell {
         return stackView
     }()
 
+
+    private lazy var gradientView: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor(named: "DarkPurpleColor")!.cgColor,
+                           UIColor(named: "OrangeColor")!.cgColor,
+                           UIColor(named: "RoyalBlueColor")!.cgColor,
+                           UIColor(named: "SignalOrangeColor")!.cgColor,
+                           UIColor(named: "PersianBlueColor")!.cgColor]
+        return gradient
+    }()
+
+    private lazy var gradientShape: CAShapeLayer = {
+        let shape = CAShapeLayer()
+        shape.lineWidth = 4
+        shape.path = UIBezierPath(roundedRect: CGRect(x: 2,y: 2,
+                                                      width:  self.baseView.bounds.width - 4,
+                                                      height: self.baseView.bounds.height - 4),
+                                                      cornerRadius: 21).cgPath
+        shape.strokeColor = UIColor.black.cgColor
+        shape.fillColor = UIColor.clear.cgColor
+        return shape
+    }()
+
     func configureCell(cell: DifficultyPage) {
         self.categoryImageView.image = UIImage(named: cell.image)
         self.levelNameLabel.text = cell.level
@@ -111,27 +134,26 @@ class CategoryCell: UITableViewCell {
         self.exampleLabel.text = cell.example
     }
 
-    func tapGradient() {
-        let gradient = CAGradientLayer()
-//        gradient.frame =  CGRect(origin: .zero, size: self.baseView.bounds.size)
-        gradient.frame = self.baseView.bounds
-        gradient.cornerRadius = 25
-        gradient.colors = [UIColor.blue.cgColor, UIColor.green.cgColor]
 
-        let shape = CAShapeLayer()
-        shape.lineWidth = 10
-        shape.path = UIBezierPath(rect: self.baseView.bounds).cgPath
-        shape.strokeColor = UIColor.black.cgColor
-        shape.fillColor = UIColor.clear.cgColor
-        gradient.mask = shape
-
-        self.baseView.layer.addSublayer(gradient)
-
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.15) {
-            self.baseView.layer.sublayers?.removeLast()
-
-        }
+    func createGradientBorder() {
+        self.gradientView.frame = self.baseView.bounds
+        self.gradientView.mask = self.gradientShape
+        self.baseView.layer.addSublayer(gradientView)
     }
+
+    func deleteGradientBorder() {
+        self.baseView.layer.sublayers?.removeLast()
+    }
+
+    func createMonochromeBorder() {
+       self.baseView.layer.borderWidth = 4
+       self.baseView.layer.borderColor = UIColor(named: "RoyalBlueColor")?.cgColor
+    }
+
+    func deleteMonochromeBorder() {
+        self.baseView.layer.borderWidth = 0
+    }
+    
 
     private func setupView () {
         self.addSubview(contentView)

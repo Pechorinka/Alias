@@ -32,7 +32,6 @@ final class CategoryView: UIView {
     }
     
 
-
     private func setView() {
        self.addSubview( self.categoryTableView)
 
@@ -63,6 +62,7 @@ extension CategoryView: UITableViewDataSource {
         return 200
     }
 
+
 }
 
 //MARK: - UITableViewDelegate
@@ -70,18 +70,10 @@ extension CategoryView: UITableViewDataSource {
 extension CategoryView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+
 
         if let cell = tableView.cellForRow(at: indexPath) as? CategoryCell {
-//            cell.baseView.layer.borderWidth = 5
-//            cell.baseView.layer.borderColor = UIColor(named: "RoyalBlueColor")?.cgColor
-
-            cell.tapGradient()
-
-//            DispatchQueue.main.asyncAfter(deadline: .now()+0.15) {
-//                cell.baseView.layer.borderWidth = 0
-//
-//            }
+            cell.createGradientBorder()
         }
 
     }
