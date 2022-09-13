@@ -17,7 +17,6 @@ final class CategoryView: UIView {
         }
     }
 
-
     private lazy var categoryTableView: UITableView = {
         let tableView = UITableView(frame: self.bounds, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,6 +27,22 @@ final class CategoryView: UIView {
         tableView.register(CategoryCell.self, forCellReuseIdentifier: "CategoryCell")
         return tableView
     }()
+
+    private lazy var bottomButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .black
+        button.setTitle("Далее", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Phosphate-Solid", size: 24)
+        button.titleLabel?.textColor = .white
+        button.layer.cornerRadius = 16
+        button.addTarget(self, action: #selector(didTapBottomButton), for: .touchUpInside)
+        return button
+    }()
+
+   @objc private func didTapBottomButton() {
+       print("Игра началась!")
+   }
 
     init(categories: [CategoryModel], frame: CGRect = .zero) {
         self.categories = categories
@@ -40,14 +55,21 @@ final class CategoryView: UIView {
     }
     
 
-    private func setView() {
-       self.addSubview( self.categoryTableView)
+    private func setView() {[
+        self.categoryTableView,
+        self.bottomButton
+    ].forEach { self.addSubview($0) }
 
         NSLayoutConstraint.activate([
             self.categoryTableView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             self.categoryTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.categoryTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.categoryTableView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
+            self.categoryTableView.bottomAnchor.constraint(equalTo: self.bottomButton.topAnchor, constant: -5),
+
+            self.bottomButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -11),
+            self.bottomButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24),
+            self.bottomButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -24),
+            self.bottomButton.heightAnchor.constraint(equalToConstant: 66)
         ])
     }
 }
