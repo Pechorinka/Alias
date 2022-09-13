@@ -127,13 +127,12 @@ class CategoryCell: UITableViewCell {
         return shape
     }()
 
-    func configureCell(cell: DifficultyPage) {
+    func configureCell(cell: CategoryModel) {
         self.categoryImageView.image = UIImage(named: cell.image)
-        self.levelNameLabel.text = cell.level
+        self.levelNameLabel.text = cell.title
         self.descriptionLabel.text = cell.description
         self.exampleLabel.text = cell.example
     }
-
 
     func createGradientBorder() {
         self.gradientView.frame = self.baseView.bounds

@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //        window?.rootViewController = AppNavigationController(rootViewController: StartMenuViewController())
 
-        window?.rootViewController = AppNavigationController(rootViewController: DifficultyPageViewController())
+        window?.rootViewController = AppNavigationController(rootViewController: CategoryViewController())
         window?.makeKeyAndVisible()
         
         return true

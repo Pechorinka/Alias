@@ -10,7 +10,15 @@ import UIKit
 class CategoryViewController: CustomViewController {
 
     override var nameViewControler: String { "КАТЕГОРИИ" }
-    private lazy var categoryView = CategoryView()
+    let choiceModel = DifficultyChoiceModel()
+    private lazy var categoryView = CategoryView(categories: self.categories)
+
+
+    private var categories: [CategoryModel] = [] {
+        didSet {
+            self.categoryView.categories = self.categories
+        }
+    }
 
 
     override func viewDidLoad() {
@@ -25,6 +33,10 @@ class CategoryViewController: CustomViewController {
             self.categoryView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             self.categoryView.topAnchor.constraint(equalTo: self.customNavigationBarView.bottomAnchor, constant: 5)
         ])
+
+        self.choiceModel.loadCategories { categories in
+            self.categories = categories
+        }
     }
 
 

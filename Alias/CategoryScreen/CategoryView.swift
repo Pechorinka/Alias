@@ -9,7 +9,11 @@ import UIKit
 
 final class CategoryView: UIView {
 
-    var categories = ["","","","","",""]
+    var categories: [CategoryModel] {
+        didSet {
+            self.categoryTableView.reloadData()
+        }
+    }
 
 
     private lazy var categoryTableView: UITableView = {
@@ -22,7 +26,8 @@ final class CategoryView: UIView {
         return tableView
     }()
 
-    override init(frame: CGRect) {
+    init(categories: [CategoryModel], frame: CGRect = .zero) {
+        self.categories = categories
         super.init(frame: frame)
         setView() 
     }
@@ -54,12 +59,13 @@ extension CategoryView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
+        cell.configureCell(cell: categories[indexPath.row])
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 180
     }
 
 

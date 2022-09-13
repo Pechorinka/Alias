@@ -1,11 +1,11 @@
 
 import Foundation
 
-struct WordSetsModels: Codable {
-    let level: [WordSetsModel]
-}
+//struct WordSetsModels: Codable {
+//    let level: [CategoryModel]
+//}
 
-struct WordSetsModel: Codable {
+struct CategoryModel: Codable {
     let title: String
     let image: String
     let color: String
