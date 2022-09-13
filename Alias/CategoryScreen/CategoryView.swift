@@ -9,6 +9,8 @@ import UIKit
 
 final class CategoryView: UIView {
 
+    var selectedIndex:Int?
+
     var categories: [CategoryModel] {
         didSet {
             self.categoryTableView.reloadData()
@@ -22,6 +24,7 @@ final class CategoryView: UIView {
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.allowsMultipleSelection = true
         tableView.register(CategoryCell.self, forCellReuseIdentifier: "CategoryCell")
         return tableView
     }()
@@ -76,12 +79,22 @@ extension CategoryView: UITableViewDataSource {
 extension CategoryView: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? CategoryCell
 
-
-        if let cell = tableView.cellForRow(at: indexPath) as? CategoryCell {
-            cell.createGradientBorder()
+        if selectedIndex == indexPath.row {
+            selectedIndex = nil
+            cell?.deleteGradientBorder()
+        } else {
+            selectedIndex = indexPath.row
+            cell?.createGradientBorder()
         }
 
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? CategoryCell {
+            cell.deleteGradientBorder()
+        }
     }
 
 }
