@@ -55,10 +55,12 @@ class GameRound {
     
     func pauseRound() {
         self.invalidateTimer()
+        self.musicManager.player?.pause()
     }
     
     func continueRound() {
         self.startGameTimer()
+        self.musicManager.player?.play()
     }
 }
 
