@@ -18,8 +18,9 @@ class TeamsMenuView: UIView {
     }
     
     var addNewTeam :(() -> Void)?
-    var deleteTeam :(() -> Void)?
+    var deleteTeam :((Int?, String?) -> Void)?
     var nextVC :(() -> Void)?
+    var renameTeam :((Int?, String?, String?) -> Void)?
     
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: self.bounds, style: .plain)
@@ -27,40 +28,14 @@ class TeamsMenuView: UIView {
          tableView.backgroundColor = .white
          tableView.translatesAutoresizingMaskIntoConstraints = false
          tableView.register(TeamCell.self, forCellReuseIdentifier: "TeamCell")
+        tableView.register(PlusCell.self, forCellReuseIdentifier: "PlusCell")
          tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
          tableView.delegate = self
          tableView.separatorStyle = .none
          return tableView
      } ()
     
-    private lazy var minusButton: UIButton = {
-        let homeSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 40, weight: .black)
-        let btn = UIButton()
-        let image = UIImage(systemName: "minus.square.fill", withConfiguration: homeSymbolConfiguration)
-        btn.setImage(image, for: .normal)
-        btn.tintColor = .gray
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(didTapMinusButton), for: .touchUpInside)
-        btn.isUserInteractionEnabled = true
-        btn.startAnimatingPressActions()
 
-        return btn
-    }()
-    
-    private lazy var plusButton: UIButton = {
-        let homeSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 40, weight: .black)
-        let btn = UIButton()
-        let image = UIImage(systemName: "plus.square.fill", withConfiguration: homeSymbolConfiguration)
-        btn.setImage(image, for: .normal)
-        btn.tintColor = .black
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(didTapPlusButton), for: .touchUpInside)
-        btn.isUserInteractionEnabled = true
-        btn.startAnimatingPressActions()
-
-        return btn
-    }()
-    
     private lazy var nextButton: UIButton = {
         let btn = UIButton()
         btn.backgroundColor = .black
@@ -78,6 +53,7 @@ class TeamsMenuView: UIView {
         self.minNumberOfTeams = minNumberOfTeams
         self.maxNumberOfTeams = maxNumberOfTeams
         self.teams = teams
+        
         super.init(frame: frame)
         
         self.setupUI()
@@ -88,10 +64,11 @@ class TeamsMenuView: UIView {
     }
     
     private func setupUI() {
-        addSubview(self.nextButton)
-        addSubview(self.minusButton)
-        addSubview(self.plusButton)
+        
+        self.overrideUserInterfaceStyle = .light
         addSubview(self.tableView)
+        
+        addSubview(self.nextButton)
         
         NSLayoutConstraint.activate([
             
@@ -99,72 +76,79 @@ class TeamsMenuView: UIView {
             self.nextButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -11),
             self.nextButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24),
             self.nextButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -24),
-
-            self.minusButton.trailingAnchor.constraint(equalTo: self.centerXAnchor),
-            self.minusButton.heightAnchor.constraint(equalToConstant: 40),
-            self.minusButton.widthAnchor.constraint(equalToConstant: 40),
-            self.minusButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             
-            self.plusButton.leadingAnchor.constraint(equalTo: self.centerXAnchor),
-            self.plusButton.heightAnchor.constraint(equalToConstant: 40),
-            self.plusButton.widthAnchor.constraint(equalToConstant: 40),
-            self.plusButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            
-            self.tableView.topAnchor.constraint(equalTo: self.plusButton.bottomAnchor, constant: 16),
+            self.tableView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             self.tableView.bottomAnchor.constraint(equalTo: self.nextButton.topAnchor, constant: -16),
             self.tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            self.tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
     }
     
     @objc func didTapPlusButton(sender: UIButton) {
         self.addNewTeam?()
-        self.changePlusMinusButtonColor()
-        self.tableView.reloadData()
-    }
-    
-    @objc func didTapMinusButton(sender: UIButton) {
-        self.deleteTeam?()
-        self.changePlusMinusButtonColor()
         self.tableView.reloadData()
     }
     
     @objc func didTapNextButton() {
         self.nextVC?()
     }
-
-    private func changePlusMinusButtonColor() {
-        if teams.count == self.minNumberOfTeams {
-            self.minusButton.tintColor = .gray
-        } else if teams.count == self.maxNumberOfTeams {
-            self.plusButton.tintColor = .gray
-        } else {
-            self.plusButton.tintColor = .black
-            self.minusButton.tintColor = .black
-        }
-    }
+    
 }
 
 extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.section < teams.count {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamCell
         
-        let team = self.teams[indexPath.section]
-        cell.teamLabel.text = team.name
-        cell.teamLabel.textColor = .white
-        
-        let rest = indexPath.section % 3
-        
-        if rest == 0 {
-            cell.myView.backgroundColor = UIColor(named: "RoyalBlueColor")
-        } else if rest == 1 {
-            cell.myView.backgroundColor = UIColor(named: "DarkPurpleColor")
-        } else if rest == 2 {
-            cell.myView.backgroundColor = UIColor(named: "OrangeColor")
+            let team = self.teams[indexPath.section]
+            cell.teamLabel.text = team.name
+            cell.teamLabel.textColor = .white
+            cell.crossDelete = {
+                [weak self] in
+                guard let self = self else { return }
+                
+                self.deleteTeam?(indexPath.section, team.name)
+            }
+            
+            cell.donePress = {
+                [weak self] in
+                guard let self = self else { return }
+                
+                print (team.name)
+                self.renameTeam!(indexPath.section, team.name, cell.teamLabel.text)
+                self.tableView.reloadData()
+            }
+            
+            cell.cancelPress = {
+                [weak self] in
+                guard let self = self else { return }
+                
+                self.tableView.reloadData()
+            }
+            
+            if teams.count == 2 {
+                cell.crossImage.isHidden = true
+            } else {
+                cell.crossImage.isHidden = false
+            }
+            
+            let rest = indexPath.section % 3
+            
+            if rest == 0 {
+                cell.myView.backgroundColor = UIColor(named: "RoyalBlueColor")
+            } else if rest == 1 {
+                cell.myView.backgroundColor = UIColor(named: "DarkPurpleColor")
+            } else if rest == 2 {
+                cell.myView.backgroundColor = UIColor(named: "OrangeColor")
+            }
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PlusCell", for: indexPath) as! PlusCell
+            return cell
         }
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -177,12 +161,29 @@ extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.teams.count
+        
+        if teams.count == maxNumberOfTeams {
+            return self.teams.count
+        }
+        else {
+            return self.teams.count + 1
+        }
     }
+
 //Передает пуш делегату в TeamMenuViewController
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.presentAlert()
-        self.sectionToRename = indexPath.section
+        if indexPath.section == teams.count {
+            self.addNewTeam?()
+            self.tableView.reloadData()
+            tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+        } else {
+            self.sectionToRename = indexPath.section
+            let cell = self.tableView.cellForRow(at: indexPath) as! TeamCell
+            cell.teamLabel.becomeFirstResponder()
+        }
     }
+    
 }
+
