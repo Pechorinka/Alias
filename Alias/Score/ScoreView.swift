@@ -91,6 +91,7 @@ class ScoreView: UIView {
         btn.layer.cornerRadius = 16
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.addTarget(self, action: #selector(startGame), for: .touchUpInside)
+        btn.startAnimatingPressActions()
         
         return btn
     }()

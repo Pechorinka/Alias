@@ -19,6 +19,7 @@ final class DifficultyPageView: UIView {
         backButton.setImage(image, for: .normal)
         backButton.tintColor = .black
         backButton.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+        backButton.startAnimatingPressActions()
         return backButton
     }()
 
@@ -40,6 +41,7 @@ final class DifficultyPageView: UIView {
         forwardButton.setImage(image, for: .normal)
         forwardButton.tintColor = .black
         forwardButton.addTarget(self, action: #selector(didTapForwardButton), for: .touchUpInside)
+         forwardButton.startAnimatingPressActions()
         return forwardButton
     }()
 
@@ -117,6 +119,7 @@ final class DifficultyPageView: UIView {
         bottomButton.titleLabel?.textColor = .white
         bottomButton.layer.cornerRadius = 16
         bottomButton.addTarget(self, action: #selector(didTapBottomButton), for: .touchUpInside)
+         bottomButton.startAnimatingPressActions()
         return bottomButton
     }()
 

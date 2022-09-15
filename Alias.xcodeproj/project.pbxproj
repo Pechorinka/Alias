@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A3CBEE2289FFEAC003535FE /* PlusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A3CBEE1289FFEAC003535FE /* PlusCell.swift */; };
 		2A8EB12C28957E8C00BB6D04 /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A8EB12B28957E8C00BB6D04 /* MusicModel.swift */; };
 		38C4461D2893F323009EED5E /* ResultScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4461C2893F323009EED5E /* ResultScreenViewController.swift */; };
 		38C4461F2893F346009EED5E /* ResultScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4461E2893F346009EED5E /* ResultScreenView.swift */; };
@@ -68,6 +69,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A3CBEE1289FFEAC003535FE /* PlusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusCell.swift; sourceTree = "<group>"; };
 		2A8EB12B28957E8C00BB6D04 /* MusicModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
 		38C4461C2893F323009EED5E /* ResultScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultScreenViewController.swift; sourceTree = "<group>"; };
 		38C4461E2893F346009EED5E /* ResultScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultScreenView.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				77448CE7289255770040A442 /* TeamsMenuViewController.swift */,
 				77448CE8289255770040A442 /* TeamsMenuView.swift */,
 				77448CEA289255770040A442 /* TeamCell.swift */,
+				2A3CBEE1289FFEAC003535FE /* PlusCell.swift */,
 			);
 			path = TeamsMenu;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				77448D0E2892C7170040A442 /* AppNavigationController.swift in Sources */,
 				77448CC0289047CF0040A442 /* CustomButton.swift in Sources */,
 				2A8EB12C28957E8C00BB6D04 /* MusicModel.swift in Sources */,
+				2A3CBEE2289FFEAC003535FE /* PlusCell.swift in Sources */,
 				77448CDD289229DC0040A442 /* GameScreenView.swift in Sources */,
 				9FBD47B128927C0000687891 /* ScoreCell.swift in Sources */,
 				9F7F697F2896BFD7007AA3DA /* JokeViewController.swift in Sources */,
@@ -661,7 +665,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -690,7 +694,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

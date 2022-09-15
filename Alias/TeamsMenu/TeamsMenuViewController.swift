@@ -34,11 +34,9 @@ class TeamsMenuViewController: CustomViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.alertManager.delegate = self //подписка на делегата ренейма команды
-        self.teamsMenuView.delegate = self //подписка на делегата пуша алерта
 
         self.teamsMenuView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.teamsMenuView)
@@ -65,14 +63,23 @@ class TeamsMenuViewController: CustomViewController {
             self.teams.append(newTeam)
         }
     
-        teamsMenuView.deleteTeam = {
-            [weak self] in
+        self.teamsMenuView.deleteTeam = {
+            [weak self] number, nameToDelete in
             guard let self = self else { return }
             
             if self.teams.count != self.minNumberOfTeams {
-                self.teams.removeLast()
+                self.teams.remove(at: number!)
+                self.teamsCreator.eraseDeletedName(oldName: nameToDelete!)
             }
             self.musicManager.playSound(soundName: "Transition")
+            
+        }
+        
+        self.teamsMenuView.renameTeam = {
+            [weak self] num, oldN, newN in
+            guard let self = self else { return }
+
+            self.teams[num!] = self.teamsCreator.makeNewTeamName(oldName: oldN!, newName: newN!)
         }
         
         teamsMenuView.nextVC = {
@@ -81,11 +88,11 @@ class TeamsMenuViewController: CustomViewController {
             
             let vc = DifficultyPageViewController()
             vc.teams = self.teams
-            print("Our Teams \(self.teams)")
             self.navigationController?.pushViewController(vc, animated: true)
 
             self.musicManager.playSound(soundName: "Transition")
         }
+        
     }
 }
 
@@ -98,12 +105,20 @@ extension TeamsMenuViewController: PresentAlertDelegate {
 }
 
 //MARK: - NewNameDelegate
-//Замена ячейки по индексу - переименование команды
-extension TeamsMenuViewController: NewNameDelegate {
+//Замена ячейки по индексу - переименование команды // Удалить?
+/*extension TeamsMenuViewController: NewNameDelegate {
     func renameTeam(name: String) {
         guard let index = self.teamsMenuView.sectionToRename else {return}
         self.teams.remove(at: index)
         self.teams.insert(self.teamsCreator.makeNewTeamName(name: name), at: index)
     }
 }
+*/
 
+//MARK: - PopOver
+
+extension TeamsMenuViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        .none
+    }
+}
