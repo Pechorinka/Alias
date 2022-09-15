@@ -28,9 +28,11 @@ final class DifficultyPageView: UIView {
     }
 
     lazy var choiceImageView: UIImageView = {
-        let choiceImageView = UIImageView()
-        choiceImageView.translatesAutoresizingMaskIntoConstraints = false
-        return choiceImageView
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
 
      private lazy var forwardButton: UIButton = {
@@ -67,6 +69,8 @@ final class DifficultyPageView: UIView {
         let levelLabel = UILabel()
         levelLabel.translatesAutoresizingMaskIntoConstraints = false
         levelLabel.backgroundColor = .white
+        levelLabel.numberOfLines = 0
+        levelLabel.lineBreakMode = .byWordWrapping
         levelLabel.textAlignment = .center
         levelLabel.font = UIFont(name: "Phosphate-Solid", size: 32)
         return levelLabel
@@ -101,10 +105,10 @@ final class DifficultyPageView: UIView {
                                 [
                                     self.levelLabel,
                                     self.descriptionLabel,
-                                    self.exampleLabel
+//                                    self.exampleLabel
                                 ])
         labelStackView.axis = .vertical
-        labelStackView.spacing = 5.0
+        labelStackView.spacing = 20.0
         labelStackView.alignment = .center
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
         return labelStackView
@@ -144,12 +148,15 @@ final class DifficultyPageView: UIView {
     ].forEach { self.addSubview($0) }
 
         NSLayoutConstraint.activate([
-            imageStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
-            imageStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.imageStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
+            self.imageStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 
-            labelStackView.topAnchor.constraint(equalTo: imageStackView.bottomAnchor, constant: 15),
-            labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24),
-            labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -24),
+            self.choiceImageView.heightAnchor.constraint(equalToConstant: 200),
+            self.choiceImageView.widthAnchor.constraint(equalToConstant: 200),
+
+            self.labelStackView.topAnchor.constraint(equalTo: imageStackView.bottomAnchor, constant: 15),
+            self.labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24),
+            self.labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -24),
 
             self.bottomButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -11),
             self.bottomButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24),

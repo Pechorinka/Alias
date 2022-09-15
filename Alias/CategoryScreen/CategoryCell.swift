@@ -130,6 +130,7 @@ class CategoryCell: UITableViewCell {
     func configureCell(cell: CategoryModel) {
         self.categoryImageView.image = UIImage(named: cell.image)
         self.levelNameLabel.text = cell.title
+        self.levelNameLabel.textColor = UIColor(named: cell.color)
         self.descriptionLabel.text = cell.description
         self.exampleLabel.text = cell.example
     }
