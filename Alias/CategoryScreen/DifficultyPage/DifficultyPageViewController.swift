@@ -23,22 +23,22 @@ final class DifficultyPageViewController: CustomViewController {
             self.difficultyPageViuw.topAnchor.constraint(equalTo: self.customNavigationBarView.bottomAnchor)
         ])
         self.difficultyPageViuw.delegate = self
-        self.updateUI()
+//        self.updateUI()
     }
 
-    private func updateUI() {
-        DispatchQueue.main.async {
-            let update = self.difficultyChoiceModel.loadJson()
-            let image = update?.image
-            let color = update?.color
-            
-            self.difficultyPageViuw.choiceImageView.image = UIImage(named: image!)
-            self.difficultyPageViuw.levelLabel.textColor = UIColor(named: color!)
-            self.difficultyPageViuw.levelLabel.text = update?.level
-            self.difficultyPageViuw.descriptionLabel.text = update?.description
-            self.difficultyPageViuw.exampleLabel.text = update?.example
-        }
-    }
+//    private func updateUI() {
+//        DispatchQueue.main.async {
+//            let update = self.difficultyChoiceModel.loadJson()
+//            let image = update?.image
+//            let color = update?.color
+//
+//            self.difficultyPageViuw.choiceImageView.image = UIImage(named: image!)
+//            self.difficultyPageViuw.levelLabel.textColor = UIColor(named: color!)
+//            self.difficultyPageViuw.levelLabel.text = update?.level
+//            self.difficultyPageViuw.descriptionLabel.text = update?.description
+//            self.difficultyPageViuw.exampleLabel.text = update?.example
+//        }
+//    }
 }
 
 // MARK: - TapButtonDelegate
@@ -49,21 +49,23 @@ extension DifficultyPageViewController: TapButtonDelegate {
         self.difficultyChoiceModel.makeForwardChoice()
         self.musicManager.playSound(soundName: "Transition")
         self.gameWords = self.difficultyChoiceModel.getWords()
-        self.updateUI()
+//        self.updateUI()
     }
 
     func didBackChoice() {
         self.difficultyChoiceModel.makeBackChoice()
         self.musicManager.playSound(soundName: "Transition")
         self.gameWords = self.difficultyChoiceModel.getWords()
-        self.updateUI()
+//        self.updateUI()
     }
 
     func didMakeChoice() {
-        let vc = ScoreViewController(
-            teams: self.teams,
-            gameWords: self.gameWords
-        )
+//        let vc = ScoreViewController(
+//            teams: self.teams,
+//            gameWords: self.gameWords
+//        )
+
+        let vc = CategoryViewController()
         
         navigationController?.pushViewController(vc, animated: true)
     }

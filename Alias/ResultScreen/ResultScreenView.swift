@@ -36,7 +36,7 @@ class ResultScreenView: UIView {
         winLabel.translatesAutoresizingMaskIntoConstraints = false
         winLabel.text = "WIN!"
         winLabel.textAlignment = .center
-        winLabel.textColor = .black
+        winLabel.textColor = UIColor(named: "YellowColor")
         winLabel.font = UIFont(name: "Phosphate-Solid", size: 40)
         return winLabel
     }()
@@ -49,7 +49,7 @@ class ResultScreenView: UIView {
         circleLabel.textAlignment = .center
         circleLabel.textColor = .black
         circleLabel.layer.masksToBounds = true
-        circleLabel.layer.cornerRadius = 60
+        circleLabel.layer.cornerRadius = 35
         circleLabel.font = UIFont(name: "Phosphate-Solid", size: 40)
         return circleLabel
     }()
@@ -57,7 +57,7 @@ class ResultScreenView: UIView {
     private lazy var cupImage: UIImageView = {
         let cupImage = UIImageView()
         cupImage.translatesAutoresizingMaskIntoConstraints = false
-        cupImage.image = UIImage(named: "Goodies Appreciation")
+        cupImage.image = UIImage(named: "Goodies Appreciation(pdf)")
         cupImage.isUserInteractionEnabled = true
         let tapCup = UITapGestureRecognizer(target: self, action: #selector(tapCupImage))
         cupImage.addGestureRecognizer(tapCup)
@@ -78,7 +78,7 @@ class ResultScreenView: UIView {
                                             self.winLabel,
                                         ])
         winStackView.axis = .vertical
-        winStackView.spacing = 5.0
+        winStackView.spacing = 0.0
         winStackView.alignment = .center
         winStackView.translatesAutoresizingMaskIntoConstraints = false
         return winStackView
@@ -144,7 +144,9 @@ class ResultScreenView: UIView {
         
         [self.backgroundImage,
          self.winStackView,
-         self.cupStackView,
+//         self.cupStackView,
+         self.cupImage,
+         self.circleLabel,
          self.resultTableView,
          self.bottomButton].forEach { self.addSubview($0)}
          self.teamLabel.text = self.winner.name
@@ -160,14 +162,23 @@ class ResultScreenView: UIView {
             self.backgroundImage.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.6),
 
             self.winStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.winStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 30),
+            self.winStackView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor,
+                                                                                  constant: 30),
 
-            self.circleLabel.heightAnchor.constraint(equalToConstant: 120),
-            self.circleLabel.widthAnchor.constraint(equalToConstant: 120),
+            self.cupImage.topAnchor.constraint(equalTo: self.winStackView.bottomAnchor),
+            self.cupImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.cupImage.heightAnchor.constraint(equalToConstant: 255),
+            self.cupImage.widthAnchor.constraint(equalToConstant: 185),
 
-            self.cupStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            self.cupStackView.topAnchor.constraint(equalTo: self.winStackView.bottomAnchor, constant: 10),
-            self.cupStackView.bottomAnchor.constraint(equalTo: self.backgroundImage.bottomAnchor,constant: -10),
+
+            self.circleLabel.topAnchor.constraint(equalTo: self.cupImage.topAnchor, constant: 100),
+            self.circleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.circleLabel.heightAnchor.constraint(equalToConstant: 70),
+            self.circleLabel.widthAnchor.constraint(equalToConstant: 70),
+
+//            self.cupStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+//            self.cupStackView.topAnchor.constraint(equalTo: self.winStackView.bottomAnchor, constant: 10),
+//            self.cupStackView.bottomAnchor.constraint(equalTo: self.backgroundImage.bottomAnchor,constant: -10),
 
             self.resultTableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.resultTableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
