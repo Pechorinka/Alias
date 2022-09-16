@@ -1,11 +1,11 @@
 
 import UIKit
 
-class DifficultyChoiceModel {
+class CategoryChoiceModel {
 
     private var levelPages = [
-        LevelPageModel(image: "Goodies Cool Fire", level: "Классическая \nигра", color: "SignalOrangeColor", description: "Знакомый формат игры. \nСодержит в себе наборы слов и словосочетаний, сгрупированные по уровню сложности"),
-        LevelPageModel(image: "Goodies Stars", level: "Тематическая \nигра", color: "DarkPurpleColor", description: "Выбери любимую тему и отгадывай слова! \nСреди категорий: путешествия, наука, слэнг и, конечно, еда!")]
+        LevelPageModel(image: "Classic", level: "Классическая игра", color: "SignalOrangeColor", description: "Знакомый формат игры. \nСодержит в себе наборы слов и словосочетаний, сгрупированные по уровню сложности"),
+        LevelPageModel(image: "Categories", level: "Тематическая игра", color: "PersianBlueColor", description: "Выбери любимую тему и отгадывай слова! \nСреди категорий: путешествия, наука, слэнг и, конечно, еда!")]
     private var categories = [CategoryModel]()
     private var choice = 0
 

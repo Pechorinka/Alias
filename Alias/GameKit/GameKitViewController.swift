@@ -1,11 +1,11 @@
 
 import UIKit
 
-final class DifficultyPageViewController: CustomViewController {
+final class GameKitViewController: CustomViewController {
 
-    override var nameViewControler: String { "НАБОРЫ" }
-    private lazy var difficultyPageViuw = DifficultyPageView()
-    private lazy var difficultyChoiceModel = DifficultyChoiceModel()
+    override var nameViewControler: String { "КАТЕГОРИИ" }
+    private lazy var gameKitViuw = GameKitView()
+    private lazy var difficultyChoiceModel = CategoryChoiceModel()
     private let musicManager = MusicModel()
     lazy var teams = [Team]()
 //    lazy var gameWords: [String] = self.difficultyChoiceModel.getWords()
@@ -13,16 +13,16 @@ final class DifficultyPageViewController: CustomViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.difficultyPageViuw.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.difficultyPageViuw)
+        self.gameKitViuw.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.gameKitViuw)
         
         NSLayoutConstraint.activate([
-            self.difficultyPageViuw.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-            self.difficultyPageViuw.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-            self.difficultyPageViuw.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            self.difficultyPageViuw.topAnchor.constraint(equalTo: self.customNavigationBarView.bottomAnchor)
+            self.gameKitViuw.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            self.gameKitViuw.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            self.gameKitViuw.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+            self.gameKitViuw.topAnchor.constraint(equalTo: self.customNavigationBarView.bottomAnchor, constant: 5)
         ])
-        self.difficultyPageViuw.delegate = self
+        self.gameKitViuw.delegate = self
         self.updateUI()
     }
 
@@ -31,16 +31,16 @@ final class DifficultyPageViewController: CustomViewController {
         let image = update.image
         let color = update.color
 
-        self.difficultyPageViuw.choiceImageView.image = UIImage(named: image)
-        self.difficultyPageViuw.levelLabel.textColor = UIColor(named: color)
-        self.difficultyPageViuw.levelLabel.text = update.level
-        self.difficultyPageViuw.descriptionLabel.text = update.description
+        self.gameKitViuw.choiceImageView.image = UIImage(named: image)
+        self.gameKitViuw.levelLabel.textColor = UIColor(named: color)
+        self.gameKitViuw.levelLabel.text = update.level
+        self.gameKitViuw.descriptionLabel.text = update.description
     }
 }
 
 // MARK: - TapButtonDelegate
 
-extension DifficultyPageViewController: TapButtonDelegate {
+extension GameKitViewController: TapButtonDelegate {
     
     func didForwardChoice() {
         self.difficultyChoiceModel.makeForwardChoice()

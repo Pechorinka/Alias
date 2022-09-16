@@ -86,7 +86,7 @@ class TeamsMenuViewController: CustomViewController {
             [weak self] in
             guard let self = self else { return }
             
-            let vc = DifficultyPageViewController()
+            let vc = GameKitViewController()
             vc.teams = self.teams
             self.navigationController?.pushViewController(vc, animated: true)
 

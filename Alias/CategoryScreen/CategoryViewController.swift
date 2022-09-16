@@ -9,8 +9,8 @@ import UIKit
 
 class CategoryViewController: CustomViewController {
 
-    override var nameViewControler: String { "КАТЕГОРИИ" }
-    let choiceModel = DifficultyChoiceModel()
+    override var nameViewControler: String { "НАБОРЫ" }
+    let choiceModel = CategoryChoiceModel()
     private lazy var categoryView = CategoryView(categories: self.categories)
 
 

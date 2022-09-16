@@ -7,14 +7,14 @@ protocol TapButtonDelegate: AnyObject {
     func didMakeChoice()
 }
 
-final class DifficultyPageView: UIView {
+final class GameKitView: UIView {
     
     weak var delegate: TapButtonDelegate?
 
     private lazy var backButton: UIButton = {
         let backButton = UIButton()
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        let configuration = UIImage.SymbolConfiguration(pointSize: 40)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 20)
         let image = UIImage(systemName: "chevron.left", withConfiguration: configuration)
         backButton.setImage(image, for: .normal)
         backButton.tintColor = .black
@@ -27,10 +27,22 @@ final class DifficultyPageView: UIView {
         self.delegate?.didBackChoice()
     }
 
+    private lazy var baseView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(named: "YellowColor")
+        view.layer.cornerRadius = 25
+        return view
+    } ()
+
     lazy var choiceImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.layer.shadowColor = UIColor(named: "RoyalBlueColor")?.cgColor
+        imageView.layer.shadowOpacity = 0.5
+        imageView.layer.shadowOffset = .zero
+        imageView.layer.shadowRadius = 3
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -38,7 +50,7 @@ final class DifficultyPageView: UIView {
      private lazy var forwardButton: UIButton = {
         let forwardButton = UIButton()
         forwardButton.translatesAutoresizingMaskIntoConstraints = false
-        let configuration = UIImage.SymbolConfiguration(pointSize: 40)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 20)
         let image = UIImage(systemName: "chevron.right", withConfiguration: configuration)
         forwardButton.setImage(image, for: .normal)
         forwardButton.tintColor = .black
@@ -55,6 +67,7 @@ final class DifficultyPageView: UIView {
         let imageStackView = UIStackView(arrangedSubviews:
                                 [
                                     self.backButton,
+//                                    self.baseView,
                                     self.choiceImageView,
                                     self.forwardButton
                                 ])
@@ -72,7 +85,7 @@ final class DifficultyPageView: UIView {
         levelLabel.numberOfLines = 0
         levelLabel.lineBreakMode = .byWordWrapping
         levelLabel.textAlignment = .center
-        levelLabel.font = UIFont(name: "Phosphate-Solid", size: 32)
+        levelLabel.font = UIFont(name: "Phosphate-Solid", size: 28)
         return levelLabel
     }()
 
@@ -146,15 +159,21 @@ final class DifficultyPageView: UIView {
         self.labelStackView,
         self.bottomButton
     ].forEach { self.addSubview($0) }
+//        self.baseView.addSubview(choiceImageView)
 
         NSLayoutConstraint.activate([
-            self.imageStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
+            self.imageStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             self.imageStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 
-            self.choiceImageView.heightAnchor.constraint(equalToConstant: 200),
-            self.choiceImageView.widthAnchor.constraint(equalToConstant: 200),
+            self.choiceImageView.heightAnchor.constraint(equalToConstant: 300),
+            self.choiceImageView.widthAnchor.constraint(equalToConstant: 300),
 
-            self.labelStackView.topAnchor.constraint(equalTo: imageStackView.bottomAnchor, constant: 15),
+//            self.choiceImageView.bottomAnchor.constraint(equalTo: self.baseView.bottomAnchor),
+//            self.choiceImageView.leadingAnchor.constraint(equalTo: self.baseView.leadingAnchor),
+//            self.choiceImageView.trailingAnchor.constraint(equalTo: self.baseView.trailingAnchor),
+//            self.choiceImageView.topAnchor.constraint(equalTo:  self.baseView.topAnchor),
+
+            self.labelStackView.topAnchor.constraint(equalTo: imageStackView.bottomAnchor),
             self.labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24),
             self.labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -24),
 
