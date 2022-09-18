@@ -4,8 +4,8 @@ import UIKit
 class CategoryChoiceModel {
 
     private var levelPages = [
-        LevelPageModel(image: "Classic", level: "Классическая игра", color: "SignalOrangeColor", description: "Знакомый формат игры. \nСодержит в себе наборы слов и словосочетаний, сгрупированные по уровню сложности"),
-        LevelPageModel(image: "Categories", level: "Тематическая игра", color: "PersianBlueColor", description: "Выбери любимую тему и отгадывай слова! \nСреди категорий: путешествия, наука, слэнг и, конечно, еда!")]
+        LevelPageModel(image: "Classic", level: "Классическая игра", color: "PersianBlueColor", description: "Знакомый формат игры. \nСодержит в себе наборы слов и словосочетаний, сгруппированные по уровню сложности"),
+        LevelPageModel(image: "Theme", level: "Тематическая игра", color: "SignalOrangeColor", description: "Выбери любимую тему и отгадывай слова! \nСреди категорий: путешествия, наука, слэнг и, конечно, еда!")]
     private var categories = [CategoryModel]()
     private var choice = 0
 
