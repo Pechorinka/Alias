@@ -5,7 +5,7 @@ final class GameKitViewController: CustomViewController {
 
     override var nameViewControler: String { "КАТЕГОРИИ" }
     private lazy var gameKitViuw = GameKitView()
-    private lazy var difficultyChoiceModel = CategoryChoiceModel()
+    private lazy var choiceModel = CategoryChoiceModel()
     private let musicManager = MusicModel()
     lazy var teams = [Team]()
 //    lazy var gameWords: [String] = self.difficultyChoiceModel.getWords()
@@ -27,7 +27,7 @@ final class GameKitViewController: CustomViewController {
     }
 
     private func updateUI() {
-        let update = self.difficultyChoiceModel.getLevel()
+        let update = self.choiceModel.getLevel()
         let image = update.image
         let color = update.color
 
@@ -43,27 +43,32 @@ final class GameKitViewController: CustomViewController {
 extension GameKitViewController: TapButtonDelegate {
     
     func didForwardChoice() {
-        self.difficultyChoiceModel.makeForwardChoice()
+        self.choiceModel.makeForwardChoice()
         self.musicManager.playSound(soundName: "Transition")
 //        self.gameWords = self.difficultyChoiceModel.getWords()
         self.updateUI()
     }
 
     func didBackChoice() {
-        self.difficultyChoiceModel.makeBackChoice()
+        self.choiceModel.makeBackChoice()
         self.musicManager.playSound(soundName: "Transition")
 //        self.gameWords = self.difficultyChoiceModel.getWords()
         self.updateUI()
     }
 
     func didMakeChoice() {
-//        let vc = ScoreViewController(
-//            teams: self.teams,
-//            gameWords: self.gameWords
-//        )
-
         let vc = CategoryViewController()
-        
+
+        if gameKitViuw.choiceImageView.image == UIImage(named: "Classic") {
+            vc.categories = choiceModel.loadCategories(words: .classic)
+        } else {
+            vc.categories = choiceModel.loadCategories(words: .theme)
+        }
         navigationController?.pushViewController(vc, animated: true)
+
+        //        let vc = ScoreViewController(
+        //            teams: self.teams,
+        //            gameWords: self.gameWords
+        //        )
     }
 }
