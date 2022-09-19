@@ -24,7 +24,10 @@ class StartMenuView: UIView {
     }()
     
     private lazy var startGameButton: CustomButton = {
-        let btn = CustomButton(color: .white, title: "Новая игра", buttonHandler: {
+        let btn = CustomButton(color: .white,
+                               title: "Новая игра",
+                               titleColor: .black,
+                               buttonHandler: {
             [weak self] in
             guard let self = self else { return }
             self.newGameButtonTap?()
@@ -33,7 +36,10 @@ class StartMenuView: UIView {
     }()
     
     private lazy var rulesButton: CustomButton = {
-        let btn = CustomButton(color: .white, title: "Правила", buttonHandler: {
+        let btn = CustomButton(color: .white,
+                               title: "Правила",
+                               titleColor: .black,
+                               buttonHandler: {
             [weak self] in
             guard let self = self else { return }
             self.rulesMenuButtonTap?()

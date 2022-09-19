@@ -44,8 +44,8 @@ class ScoreViewController: CustomViewController {
     private var gameWords: [String]
     
     private lazy var game = GameEngine(
-        scoresToWin: 5,
-        roundDuration: 10,
+        scoresToWin: 10,
+        roundDuration: 15,
         teams: self.teams,
         currentRoundIndex: 0,
         gameWords: self.gameWords

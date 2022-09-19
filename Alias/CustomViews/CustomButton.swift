@@ -6,15 +6,21 @@ class CustomButton: UIView {
     
     private var button = UIButton()
 
-    init(color: UIColor,title: String, buttonHandler: @escaping () -> Void) {
-        self.button = UIButton.makeButton(color: color, title: title)
+    init(color: UIColor,
+         title: String,
+         titleColor: UIColor,
+         buttonHandler: @escaping () -> Void)
+    {
+        self.button = UIButton.makeButton(color: color,
+                                          title: title,
+                                          titleColor: titleColor)
         self.buttonHandler = buttonHandler
         
         super.init(frame: .zero)
         
         self.button.addTarget(self, action: #selector(self.keyPressed), for: .touchUpInside)
         
-        setupView()
+        self.setupView()
     }
     
     required init?(coder eCoder: NSCoder) {
@@ -41,10 +47,10 @@ class CustomButton: UIView {
 
 extension UIButton {
     
-    static func makeButton(color: UIColor, title: String) -> UIButton {
+    static func makeButton(color: UIColor, title: String, titleColor: UIColor) -> UIButton {
         let btn = UIButton()
         btn.setTitle(title, for: .normal)
-        btn.setTitleColor(.black, for: .normal)
+        btn.setTitleColor(titleColor, for: .normal)
         btn.backgroundColor = color
         btn.titleLabel?.font = UIFont(name: "Phosphate-Solid", size: 24)
         btn.titleLabel?.textAlignment = .center

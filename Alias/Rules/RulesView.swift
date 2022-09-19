@@ -2,34 +2,27 @@
 import UIKit
 
 class RulesView: UIView {
-    var backStartMenuButtonTap: (() -> Void)?
     
-    private let imageNamesArray: [String] = ["Goodies Ok",
-                                             "Goodies Nope",
-                                             "Goodies Please",
-                                             "Goodies Appreciation"
-    ]
-    
-    private let labelTextArray: [String] = [
-        "Задача каждого игрока - объяснить как можно больше слов товарищам по команде за 60 секунд",
-        "Во время объяснения нельзя использовать однокоренные слова, озвучивать перевод с иностранных языков.",
-        "Отгаданное слово приносит команде одно очко, а за пропущенное слово команда штрафуется на одно очко",
-        "Победителем становится команда, которая набрала более 50 очков, а так же самое большое количество очков среди других команд"
-    ]
+    private let imageName: String
+    private let descriptionRuleText: String
+    private let ruleText: String
+    private let shouldBottomButtonVisible: Bool
+    private var navBarBackButtonHandler: (() -> Void)?
+    private var bottomBackButtonHandler: (() -> Void)?
     
     private lazy var backButton: MyCustomBackButton = {
         let btn = MyCustomBackButton()
-        btn.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
-    
+        btn.addTarget(self, action: #selector(tapNavBarBackButton), for: .touchUpInside)
+
         return btn
     }()
     
     private lazy var ruleLabel: UILabel = {
         let label = UILabel()
         label.text = "ПРАВИЛА"
-        label.textColor = .white
+        label.textColor = .black
         label.textAlignment = .center
-        label.font = UIFont(name: "Phosphate-Solid", size: 24.0)
+        label.font = UIFont(name: "Phosphate-Solid", size: 30.0)
         
         return label
     }()
@@ -57,19 +50,37 @@ class RulesView: UIView {
         return sv
     }()
     
-    private lazy var aliasImageView: UIImageView = {
+    private lazy var centralImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "Alias")
+        iv.clipsToBounds = true
+        iv.image = UIImage(named: self.imageName)
         iv.contentMode = .scaleAspectFit
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.layer.shadowColor = UIColor(named: "RoyalBlueColor")?.cgColor
+        iv.layer.shadowOpacity = 0.5
+        iv.layer.shadowOffset = .zero
+        iv.layer.shadowRadius = 3
         
         return iv
     }()
     
-    private lazy var textLabel: UILabel = {
+    private lazy var descriptionRuleLabel: UILabel = {
         let label = UILabel()
-        label.text = "УВЛЕКАТЕЛЬНАЯ КОМАНДНАЯ\nИГРА ДЛЯ ВЕСЁЛОЙ КОМПАНИИ"
-        label.textColor = .white
-        label.font = UIFont(name: "Piazzolla-Black", size: 16.0)
+        label.font = UIFont(name: "Phosphate-Solid", size: 26)
+        label.textColor = UIColor(named: "RoyalBlueColor")
+        label.text = self.descriptionRuleText
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+    
+    private lazy var ruleTextLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: "Piazzolla", size: 20.0)
+        label.text = self.ruleText
+        label.textColor = .black
         label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -77,76 +88,52 @@ class RulesView: UIView {
         return label
     }()
     
-    private lazy var topStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews:
-                                [
-                                    self.aliasImageView,
-                                    self.textLabel
-                                ])
-        sv.axis = .vertical
-        sv.spacing = 25
-        sv.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var startMenuVCButton: CustomButton = {
+        let btn = CustomButton(color: .black,
+                               title: "К ИГРЕ",
+                               titleColor: .white,
+                               buttonHandler: {
+            [weak self] in
+            guard let self = self else { return }
+            self.bottomBackButtonHandler?()
+        })
+        btn.translatesAutoresizingMaskIntoConstraints = false
         
-        return sv
+        return btn
     }()
     
-    private lazy var textRules: [RuleDescriptionCustomView] = {
-        var views = [RuleDescriptionCustomView]()
-        
-        for (imageTitle, title) in zip(self.imageNamesArray, self.labelTextArray) {
-            let view = RuleDescriptionCustomView(imageTitle: imageTitle, title: title)
-            views.append(view)
-        }
-        return views
-    }()
-    
-    private lazy var bottomStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: self.textRules)
-        sv.axis = .vertical
-        sv.spacing = 24.0
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.alignment = .fill
-        
-        return sv
-    }()
-    
-    private lazy var bottomContainerView: UIView = {
+    private lazy var backgroundView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.cornerRadius = 15.0
         view.backgroundColor = .white
+        view.layer.borderWidth = 7.0
+        view.layer.borderColor = UIColor(named: "ShadowColor")?.cgColor
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
         return view
     }()
-    
-    private lazy var containerScrollView: UIScrollView = {
-        let sv = UIScrollView()
-        sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.showsVerticalScrollIndicator = false
-        return sv
-    }()
-    
-    private lazy var containerView: UIView = {
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(self.contentStackView)
+
+    init(imageName: String,
+         descriptionRuleText: String,
+         ruleText: String,
+         navBarBackButtonHandler: (() -> Void)?,
+         bottomBackButtonHandler: (() -> Void)?,
+         shouldBottomButtonVisible: Bool = false
+    ) {
+        self.imageName = imageName
+        self.descriptionRuleText = descriptionRuleText
+        self.ruleText = ruleText
+        self.navBarBackButtonHandler = navBarBackButtonHandler
+        self.bottomBackButtonHandler = bottomBackButtonHandler
+        self.shouldBottomButtonVisible = shouldBottomButtonVisible
+        super.init(frame: .zero)
         
-        return container
-    }()
-    
-    private lazy var contentStackView: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [
-            self.topStackView,
-            self.bottomContainerView
-        ])
-        sv.axis = .vertical
-        sv.spacing = 24.0
-        sv.alignment = .fill
-        sv.translatesAutoresizingMaskIntoConstraints = false
+        let shouldNavBarHidden = Core.shared.isFirstAppStartup
         
-        return sv
-    }()
-    
-    override init(frame: CGRect) {
-        super .init(frame: frame)
+        if shouldNavBarHidden {
+            self.customNavigationBarStack.isHidden = true
+            self.customNavigationBarStack.heightAnchor.constraint(equalToConstant: 0.0).isActive = true
+        }
         
         self.setupUI()
     }
@@ -156,36 +143,62 @@ class RulesView: UIView {
     }
     
     private func setupUI() {
-        self.backgroundColor = UIColor(named: "RoyalBlueColor")
+        self.backgroundColor = UIColor(named: "RoyalBlueColorBlack")
         
-        self.addSubview(self.customNavigationBarStack)
-        self.addSubview(self.containerScrollView)
+        self.addSubview(self.backgroundView)
+        self.backgroundView.addSubview(self.customNavigationBarStack)
+        self.backgroundView.addSubview(self.centralImageView)
+        self.backgroundView.addSubview(self.descriptionRuleLabel)
+        self.backgroundView.addSubview(self.ruleTextLabel)
         
-        self.containerScrollView.addSubview(self.containerView)
-        self.containerView.pin(to: self.containerScrollView)
-        
-        self.bottomContainerView.addSubview(self.bottomStackView)
-        self.bottomStackView.pin(to: self.bottomContainerView, edges: .init(top: 30, left: 0, bottom: 16, right: 0))
+        self.backButton.setContentCompressionResistancePriority(.required, for: .vertical)
+        self.descriptionRuleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        self.centralImageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         
         NSLayoutConstraint.activate([
-            self.customNavigationBarStack.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 24),
-            self.customNavigationBarStack.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -24),
-            self.customNavigationBarStack.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            self.backgroundView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 10.0),
+            self.backgroundView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10.0),
+            self.backgroundView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -10.0),
+            self.backgroundView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -50.0),
             
-            self.containerScrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
-            self.containerScrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
-            self.containerScrollView.topAnchor.constraint(equalTo: self.customNavigationBarStack.bottomAnchor, constant: 30),
-            self.containerScrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
+            self.customNavigationBarStack.centerXAnchor.constraint(equalTo: self.backgroundView.centerXAnchor),
+            self.customNavigationBarStack.widthAnchor.constraint(equalTo: self.backgroundView.widthAnchor, constant: -40.0),
+            self.customNavigationBarStack.topAnchor.constraint(equalTo: self.backgroundView.topAnchor, constant: 20.0),
             
-            self.containerScrollView.widthAnchor.constraint(equalTo: self.contentStackView.widthAnchor),
+            self.centralImageView.centerXAnchor.constraint(equalTo: self.backgroundView.centerXAnchor),
+            self.centralImageView.widthAnchor.constraint(equalTo: self.backgroundView.widthAnchor, constant: -40.0),
+            self.centralImageView.topAnchor.constraint(equalTo: self.customNavigationBarStack.bottomAnchor, constant: 40.0),
+
+            self.descriptionRuleLabel.centerXAnchor.constraint(equalTo: self.backgroundView.centerXAnchor),
+            self.descriptionRuleLabel.widthAnchor.constraint(equalTo: self.backgroundView.widthAnchor, constant: -40.0),
+            self.descriptionRuleLabel.topAnchor.constraint(equalTo: self.centralImageView.bottomAnchor, constant: 20.0),
             
-            self.aliasImageView.heightAnchor.constraint(equalToConstant: 64),
+            self.ruleTextLabel.centerXAnchor.constraint(equalTo: self.backgroundView.centerXAnchor),
+            self.ruleTextLabel.widthAnchor.constraint(equalTo: self.backgroundView.widthAnchor, constant: -40.0),
+            self.ruleTextLabel.topAnchor.constraint(equalTo: self.descriptionRuleLabel.bottomAnchor, constant: 20.0),
         ])
         
-        self.contentStackView.pin(to: self.containerView)
+        if self.shouldBottomButtonVisible {
+            self.backgroundView.addSubview(self.startMenuVCButton)
+            
+            NSLayoutConstraint.activate([
+                self.startMenuVCButton.centerXAnchor.constraint(equalTo: self.backgroundView.centerXAnchor),
+                self.startMenuVCButton.topAnchor.constraint(equalTo: self.ruleTextLabel.bottomAnchor, constant: 10.0),
+                self.startMenuVCButton.bottomAnchor.constraint(equalTo: self.backgroundView.bottomAnchor, constant: -20.0)
+            ])
+        } else {
+            self.ruleTextLabel.bottomAnchor.constraint(equalTo: self.backgroundView.bottomAnchor, constant: -20.0).isActive = true
+        }
+    }
+}
+
+//Actions
+extension RulesView {
+    @objc private func tapNavBarBackButton() {
+        self.navBarBackButtonHandler?()
     }
     
-    @objc private func tapBackButton() {
-        self.backStartMenuButtonTap?()
+    @objc private func goStartMenuButtonTap() {
+        self.bottomBackButtonHandler?()
     }
 }

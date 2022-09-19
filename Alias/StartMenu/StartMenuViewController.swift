@@ -15,7 +15,7 @@ class StartMenuViewController: UIViewController {
         startMenuView.rulesMenuButtonTap = {
             [weak self] in
             guard let self = self else { return }
-            let vc = RulesViewController()
+            let vc = RulesViewOnebording(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true)
         }
@@ -29,3 +29,18 @@ class StartMenuViewController: UIViewController {
     }
 }
 
+class Core {
+    static let shared = Core()
+    
+    private init() {
+        UserDefaults.standard.register(defaults: ["IsFirstAppStartup": true])
+    }
+    
+    var isFirstAppStartup: Bool {
+        UserDefaults.standard.bool(forKey: "IsFirstAppStartup")
+    }
+    
+    func setIsNotFirstAppStartup() {
+        UserDefaults.standard.set(false, forKey: "IsFirstAppStartup")
+    }
+}

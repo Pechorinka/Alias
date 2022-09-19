@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>imageName</key>
+		<string>Rules_1</string>
+		<key>descriptionRuleText</key>
+		<string>Что нужно сделать</string>
+		<key>ruleText</key>
+		<string>Перед игрой необходимо разбиться на команды. Задача одного из игроков команды - объяснять появляющиеся на экране слова. Задача остальных игроков - отгадать как можно больше слов в течение заданного времени.</string>
+		<key>shouldBottomButtonVisible</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>imageName</key>
+		<string>Rules_2</string>
+		<key>descriptionRuleText</key>
+		<string>Как играть</string>
+		<key>ruleText</key>
+		<string>При объяснении слов нельзя использовать однокоренные слова, а также переводы на другие языки. Если слово было отгадано, следует нажать на кнопку справа или смахнуть карточку со словом вправо. Если нет, нужно нажать на левую кнопку или смахнуть карточку влево.</string>
+		<key>shouldBottomButtonVisible</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>imageName</key>
+		<string>Rules_3</string>
+		<key>descriptionRuleText</key>
+		<string>Как расчитываются очки</string>
+		<key>ruleText</key>
+		<string>За каждое угаданное слово команда получает одно очко, а за пропущенное - штрафуется (в зависимости от настроек). Игра длится до тех пор, пока одна из команд не наберёт заданное количество очков. Если в раунде есть задание, команда может получить бонусные баллы за их выполнение.</string>
+		<key>shouldBottomButtonVisible</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>imageName</key>
+		<string>Rules_4</string>
+		<key>descriptionRuleText</key>
+		<string>Как победить в игре</string>
+		<key>ruleText</key>
+		<string>Если в настройках включена эта опция, то по истечении времени раунда слово могут отгадывать все команды. В таком случае одно очко получит команда, отгадавшее слово.</string>
+		<key>shouldBottomButtonVisible</key>
+		<true/>
+	</dict>
+</array>
+</plist>

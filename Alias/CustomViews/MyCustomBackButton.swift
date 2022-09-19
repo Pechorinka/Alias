@@ -19,7 +19,7 @@ class MyCustomBackButton: UIButton {
 
     func setupUI() {
         self.layer.cornerRadius = 4
-        addPlainShadow()
+        self.addPlainShadow()
         self.backgroundColor = .white
         let configuration = UIImage.SymbolConfiguration(pointSize: 20)
         let image = UIImage(systemName: "chevron.left", withConfiguration: configuration)
