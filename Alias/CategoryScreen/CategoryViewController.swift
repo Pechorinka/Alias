@@ -9,12 +9,12 @@ import UIKit
 
 class CategoryViewController: CustomViewController {
 
-    override var nameViewControler: String { "КАТЕГОРИИ" }
-    let choiceModel = DifficultyChoiceModel()
+    override var nameViewControler: String { "НАБОРЫ" }
+    let choiceModel = CategoryChoiceModel()
     private lazy var categoryView = CategoryView(categories: self.categories)
 
 
-    private var categories: [CategoryModel] = [] {
+    var categories: [CategoryModel] = [] {
         didSet {
             self.categoryView.categories = self.categories
         }
@@ -34,9 +34,9 @@ class CategoryViewController: CustomViewController {
             self.categoryView.topAnchor.constraint(equalTo: self.customNavigationBarView.bottomAnchor, constant: 5)
         ])
 
-        self.choiceModel.loadCategories { categories in
-            self.categories = categories
-        }
+//        self.choiceModel.loadCategories(words: .theme) { categories in
+//            self.categories = categories
+//        }
     }
 
 

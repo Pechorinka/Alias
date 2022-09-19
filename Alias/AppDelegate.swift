@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //        window?.rootViewController = AppNavigationController(rootViewController: StartMenuViewController())
 
-        window?.rootViewController = AppNavigationController(rootViewController: CategoryViewController())
+        window?.rootViewController = AppNavigationController(rootViewController: GameKitViewController())
         window?.makeKeyAndVisible()
         
         return true
