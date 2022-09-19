@@ -19,18 +19,6 @@ class ResultScreenViewController: UIViewController {
     override func loadView() {
         self.view = self.resultScreenView
         
-        resultScreenView.tapImageBtn = {
-            [weak self] in
-            guard let self = self else { return }
-            let vc = JokeViewController()
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
-        }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
         self.resultScreenView.backStartVC = {
             [weak self] in
             guard let self = self else { return }
