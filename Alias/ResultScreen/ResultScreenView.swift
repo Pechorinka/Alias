@@ -9,7 +9,6 @@ protocol PresentAlertDelegate: AnyObject {
 class ResultScreenView: UIView {
     
     weak var delegate: PresentAlertDelegate?
-    var tapImageBtn: (()->())?
     var backStartVC: (() -> Void)?
     var finalists: [Team]
     private let winner: Team
@@ -58,18 +57,8 @@ class ResultScreenView: UIView {
         let cupImage = UIImageView()
         cupImage.translatesAutoresizingMaskIntoConstraints = false
         cupImage.image = UIImage(named: "Goodies Appreciation(pdf)")
-        cupImage.isUserInteractionEnabled = true
-        let tapCup = UITapGestureRecognizer(target: self, action: #selector(tapCupImage))
-        cupImage.addGestureRecognizer(tapCup)
         return cupImage
     }()
-
-    @objc private func tapCupImage() {
-        
-        self.tapImageBtn?()
-        //        ResultScreenViewController().dismiss(animated: false)
-        // delegate?.presentAlert()
-    }
 
     private lazy var winStackView: UIStackView = {
         let winStackView = UIStackView(arrangedSubviews:
