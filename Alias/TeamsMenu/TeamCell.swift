@@ -68,9 +68,9 @@ class TeamCell: UITableViewCell {
         toolBar.tintColor = .purple
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let doneButton = UIBarButtonItem(title: "Готово", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.donePressed))
-        let cancelButton = UIBarButtonItem(title: "Отменить", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancelPressed))
+        let cancelButton = UIBarButtonItem(title: "Отмена", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancelPressed))
 
-        toolBar.setItems([doneButton, spaceButton, cancelButton], animated: false)
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
          toolBar.isUserInteractionEnabled = true
          toolBar.sizeToFit()
          teamLabel.inputAccessoryView = toolBar

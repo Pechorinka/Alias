@@ -154,7 +154,7 @@ class RulesView: UIView {
         self.backButton.setContentCompressionResistancePriority(.required, for: .vertical)
         self.descriptionRuleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         self.centralImageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        
+
         NSLayoutConstraint.activate([
             self.backgroundView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 10.0),
             self.backgroundView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10.0),
@@ -177,6 +177,7 @@ class RulesView: UIView {
             self.ruleTextLabel.widthAnchor.constraint(equalTo: self.backgroundView.widthAnchor, constant: -40.0),
             self.ruleTextLabel.topAnchor.constraint(equalTo: self.descriptionRuleLabel.bottomAnchor, constant: 20.0),
         ])
+
         
         if self.shouldBottomButtonVisible {
             self.backgroundView.addSubview(self.startMenuVCButton)
