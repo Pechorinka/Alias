@@ -25,6 +25,7 @@ final class CategoryView: UIView {
         tableView.delegate = self
         tableView.allowsMultipleSelection = true
         tableView.register(CategoryCell.self, forCellReuseIdentifier: "CategoryCell")
+        tableView.backgroundColor = .white
         return tableView
     }()
 

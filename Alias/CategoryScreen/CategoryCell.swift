@@ -36,7 +36,6 @@ class CategoryCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "Goodies Fire")
         return imageView
     }()
 
@@ -45,7 +44,6 @@ class CategoryCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .white
         label.textAlignment = .left
-        label.text = "ТРЕНДЫ"
         label.textColor = UIColor(named: "RoyalBlueColor")
         label.font = UIFont(name: "Phosphate-Solid", size: 26)
         return label
@@ -59,7 +57,6 @@ class CategoryCell: UITableViewCell {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
-        label.text = "Набор из оригинальной настольной игры. Содержит слова и словосочетания разной сложности."
         label.font = UIFont(name: "Piazzolla", size: 15)
         return label
     }()
@@ -72,7 +69,6 @@ class CategoryCell: UITableViewCell {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
-        label.text = "Примеры из набора: гильза, сантиметр, баскетбол"
         label.font = UIFont(name: "Piazzolla", size: 14)
         return label
     }()

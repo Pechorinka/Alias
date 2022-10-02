@@ -37,14 +37,16 @@ class CategoryChoiceModel {
     func makeForwardChoice() {
         if self.choice < self.levelPages.count - 1 {
             self.choice += 1
+        } else {
+            self.choice = 0
         }
     }
 
     func makeBackChoice() {
-        if self.choice == self.levelPages.count - 1 && self.choice >= 0 {
+        if self.choice == self.levelPages.count - 1 {
             self.choice -= 1
         } else  {
-            self.choice = 0
+            self.choice = 1
         }
     }
 
