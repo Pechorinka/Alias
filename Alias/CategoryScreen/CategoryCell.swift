@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import SkeletonView
 
 class CategoryCell: UITableViewCell {
 
     override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.backgroundColor = .white
+
+        self.isSkeletonable = true
         self.setupView()
     }
 
@@ -36,6 +39,8 @@ class CategoryCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.isSkeletonable = true
+        imageView.skeletonCornerRadius = 20
         return imageView
     }()
 
@@ -46,6 +51,8 @@ class CategoryCell: UITableViewCell {
         label.textAlignment = .left
         label.textColor = UIColor(named: "RoyalBlueColor")
         label.font = UIFont(name: "Phosphate-Solid", size: 26)
+        label.isSkeletonable = true
+        label.linesCornerRadius = 5
         return label
     }()
 
@@ -58,6 +65,8 @@ class CategoryCell: UITableViewCell {
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
         label.font = UIFont(name: "Piazzolla", size: 15)
+        label.isSkeletonable = true
+        label.linesCornerRadius = 5
         return label
     }()
 
@@ -70,6 +79,8 @@ class CategoryCell: UITableViewCell {
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .left
         label.font = UIFont(name: "Piazzolla", size: 14)
+        label.isSkeletonable = true
+        label.linesCornerRadius = 5
         return label
     }()
 
@@ -153,14 +164,15 @@ class CategoryCell: UITableViewCell {
 
     private func setupView () {
         self.addSubview(contentView)
-        self.contentView.addSubview(self.baseView)
-
         [
+            self.baseView,
             self.categoryImageView,
-            self.labelStackView
-        ].forEach { self.addSubview($0) }
+            self.levelNameLabel,
+            self.descriptionLabel,
+            self.exampleLabel
+            //            self.labelStackView
 
-        //        self.baseView.addSubview(self.cellStackView)
+        ].forEach { self.contentView.addSubview($0) }
 
         NSLayoutConstraint.activate([
             self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -178,16 +190,26 @@ class CategoryCell: UITableViewCell {
             self.categoryImageView.topAnchor.constraint(equalTo: self.baseView.topAnchor, constant: 15),
             self.categoryImageView.leadingAnchor.constraint(equalTo: self.baseView.leadingAnchor, constant: 10),
 
+            self.levelNameLabel.topAnchor.constraint(equalTo: self.baseView.topAnchor, constant: 15),
+            self.levelNameLabel.leadingAnchor.constraint(equalTo: self.categoryImageView.trailingAnchor, constant: 15),
+            self.levelNameLabel.widthAnchor.constraint(equalToConstant: 200),
             self.levelNameLabel.heightAnchor.constraint(equalToConstant: 25),
-            self.labelStackView.topAnchor.constraint(equalTo: self.baseView.topAnchor, constant: 15),
-            self.labelStackView.bottomAnchor.constraint(equalTo: self.baseView.bottomAnchor, constant:  -10),
-            self.labelStackView.trailingAnchor.constraint(equalTo: self.baseView.trailingAnchor, constant: -5),
-            self.labelStackView.leadingAnchor.constraint(equalTo: self.categoryImageView.trailingAnchor, constant: 15),
 
-//            self.cellStackView.topAnchor.constraint(equalTo: self.baseView.topAnchor),
-//            self.cellStackView.leadingAnchor.constraint(equalTo: self.baseView.leadingAnchor),
-//            self.cellStackView.trailingAnchor.constraint(equalTo: self.baseView.trailingAnchor),
-//            self.cellStackView.bottomAnchor.constraint(equalTo: self.baseView.bottomAnchor)
+            self.descriptionLabel.topAnchor.constraint(equalTo: self.levelNameLabel.bottomAnchor),
+            self.descriptionLabel.leadingAnchor.constraint(equalTo: self.categoryImageView.trailingAnchor, constant: 15),
+            self.descriptionLabel.widthAnchor.constraint(equalToConstant: 200),
+            self.descriptionLabel.heightAnchor.constraint(equalToConstant: 50),
+
+            self.exampleLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor),
+            self.exampleLabel.leadingAnchor.constraint(equalTo: self.categoryImageView.trailingAnchor, constant: 15),
+            self.exampleLabel.widthAnchor.constraint(equalToConstant: 200),
+            self.exampleLabel.heightAnchor.constraint(equalToConstant: 40),
+
+//            self.labelStackView.topAnchor.constraint(equalTo: self.baseView.topAnchor, constant: 15),
+//            self.labelStackView.bottomAnchor.constraint(equalTo: self.baseView.bottomAnchor, constant:  -10),
+//            self.labelStackView.trailingAnchor.constraint(equalTo: self.baseView.trailingAnchor, constant: -5),
+//            self.labelStackView.leadingAnchor.constraint(equalTo: self.categoryImageView.trailingAnchor, constant: 15),
+
 
         ])
     }
