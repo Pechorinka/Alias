@@ -78,7 +78,7 @@ final class GameScreenView: UIView {
         label.font = UIFont(name: "Phosphate-Solid", size: 44)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.minimumScaleFactor = 1
+        label.sizeToFit()
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
@@ -181,9 +181,14 @@ final class GameScreenView: UIView {
             
             self.contentStack.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             self.contentStack.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
+            self.contentStack.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor),
+            self.contentStack.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor),
+            
+            self.gameImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 2/3),
             
             self.gameWordLabel.centerXAnchor.constraint(equalTo: self.gameImage.centerXAnchor),
             self.gameWordLabel.centerYAnchor.constraint(equalTo: self.gameImage.centerYAnchor),
+            self.gameWordLabel.widthAnchor.constraint(equalTo: self.gameImage.widthAnchor, constant: -24),
             
             self.wrongAnswerBtn.widthAnchor.constraint(equalToConstant: 112),
             self.wrongAnswerBtn.heightAnchor.constraint(equalToConstant: 108),
