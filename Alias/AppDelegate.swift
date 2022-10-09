@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }()
         
-        window?.rootViewController = AppNavigationController(rootViewController: rootVC)
+//        window?.rootViewController = AppNavigationController(rootViewController: rootVC)
+        window?.rootViewController = WordsCheckViewController()
         window?.makeKeyAndVisible()
         
         return true

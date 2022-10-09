@@ -49,7 +49,7 @@ final class CategoryView: UIView {
     init(categories: [CategoryModel], frame: CGRect = .zero) {
         self.categories = categories
         super.init(frame: frame)
-        setView() 
+        setView()
     }
     
     required init?(coder: NSCoder) {
@@ -115,19 +115,11 @@ extension CategoryView: UITableViewDelegate {
         if selectedIndex == indexPath.row {
             selectedIndex = nil
             cell?.deleteGradientBorder()
-            cell?.deleteMonochromeBorder()
         } else {
             selectedIndex = indexPath.row
-            if selectedIndex == 5 {
-                cell?.createMonochromeBorder()
-            } else {
                 cell?.createGradientBorder()
             }
         }
-
-
-
-    }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? CategoryCell {

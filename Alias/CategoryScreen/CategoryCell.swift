@@ -22,7 +22,7 @@ class CategoryCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    lazy var baseView: UIView = {
+    private lazy var baseView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -34,7 +34,7 @@ class CategoryCell: UITableViewCell {
         return view
     } ()
 
-    lazy var categoryImageView: UIImageView = {
+    private lazy var categoryImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
@@ -44,7 +44,7 @@ class CategoryCell: UITableViewCell {
         return imageView
     }()
 
-    lazy var levelNameLabel: UILabel = {
+    private lazy var levelNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .white
@@ -56,7 +56,7 @@ class CategoryCell: UITableViewCell {
         return label
     }()
 
-    lazy var descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .white
@@ -70,7 +70,7 @@ class CategoryCell: UITableViewCell {
         return label
     }()
 
-    var exampleLabel: UILabel = {
+    private lazy var exampleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.backgroundColor = .white
@@ -198,7 +198,7 @@ class CategoryCell: UITableViewCell {
             self.descriptionLabel.topAnchor.constraint(equalTo: self.levelNameLabel.bottomAnchor),
             self.descriptionLabel.leadingAnchor.constraint(equalTo: self.categoryImageView.trailingAnchor, constant: 15),
             self.descriptionLabel.widthAnchor.constraint(equalToConstant: 200),
-            self.descriptionLabel.heightAnchor.constraint(equalToConstant: 50),
+            self.descriptionLabel.heightAnchor.constraint(equalToConstant: 70),
 
             self.exampleLabel.topAnchor.constraint(equalTo: self.descriptionLabel.bottomAnchor),
             self.exampleLabel.leadingAnchor.constraint(equalTo: self.categoryImageView.trailingAnchor, constant: 15),
