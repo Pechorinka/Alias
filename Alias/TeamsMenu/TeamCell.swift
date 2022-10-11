@@ -83,10 +83,10 @@ class TeamCell: UITableViewCell {
             self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            self.myView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
+            self.myView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
             self.myView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.myView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.myView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            self.myView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
             
             self.teamLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24),
             self.teamLabel.centerYAnchor.constraint(equalTo: self.myView.centerYAnchor),
