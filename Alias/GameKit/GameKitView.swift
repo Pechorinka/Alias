@@ -36,8 +36,23 @@ final class GameKitView: UIView {
         imageView.layer.shadowOffset = .zero
         imageView.layer.shadowRadius = 3
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        let swipeImageRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeImageRight))
+        let swipeImageLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeImageLeft))
+        swipeImageRight.direction = .right
+        swipeImageLeft.direction = .left
+        imageView.addGestureRecognizer(swipeImageRight)
+        imageView.addGestureRecognizer(swipeImageLeft)
         return imageView
     }()
+
+    @objc private func swipeImageRight() {
+        self.delegate?.didForwardChoice()
+    }
+
+    @objc private func swipeImageLeft() {
+        self.delegate?.didBackChoice()
+    }
 
      private lazy var forwardButton: UIButton = {
         let forwardButton = UIButton()
@@ -47,7 +62,7 @@ final class GameKitView: UIView {
         forwardButton.setImage(image, for: .normal)
         forwardButton.tintColor = .black
         forwardButton.addTarget(self, action: #selector(didTapForwardButton), for: .touchUpInside)
-         forwardButton.startAnimatingPressActions()
+        forwardButton.startAnimatingPressActions()
         return forwardButton
     }()
 
@@ -127,7 +142,7 @@ final class GameKitView: UIView {
         bottomButton.titleLabel?.textColor = .white
         bottomButton.layer.cornerRadius = 16
         bottomButton.addTarget(self, action: #selector(didTapBottomButton), for: .touchUpInside)
-         bottomButton.startAnimatingPressActions()
+        bottomButton.startAnimatingPressActions()
         return bottomButton
     }()
 

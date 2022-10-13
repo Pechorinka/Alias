@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SkeletonView
 
 final class CategoryView: UIView {
 
@@ -25,6 +26,7 @@ final class CategoryView: UIView {
         tableView.delegate = self
         tableView.allowsMultipleSelection = true
         tableView.register(CategoryCell.self, forCellReuseIdentifier: "CategoryCell")
+        tableView.backgroundColor = .white
         return tableView
     }()
 
@@ -47,13 +49,13 @@ final class CategoryView: UIView {
     init(categories: [CategoryModel], frame: CGRect = .zero) {
         self.categories = categories
         super.init(frame: frame)
-        setView() 
+        setView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 
     private func setView() {[
         self.categoryTableView,
@@ -84,7 +86,14 @@ extension CategoryView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
-        cell.configureCell(cell: categories[indexPath.row])
+        let animation = SkeletonAnimationBuilder().makeSlidingAnimation(withDirection: .topLeftBottomRight)
+        cell.showAnimatedGradientSkeleton(usingGradient: .init(baseColor: UIColor(named: "RoyalBlueColor")!, secondaryColor: UIColor(named: "DarkPurpleColor")!), animation: animation, transition: .crossDissolve(0.25))
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            cell.configureCell(cell: self.categories[indexPath.row])
+            cell.stopSkeletonAnimation()
+            cell.hideSkeleton()
+        })
 
         return cell
     }
@@ -108,10 +117,9 @@ extension CategoryView: UITableViewDelegate {
             cell?.deleteGradientBorder()
         } else {
             selectedIndex = indexPath.row
-            cell?.createGradientBorder()
+                cell?.createGradientBorder()
+            }
         }
-
-    }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) as? CategoryCell {
