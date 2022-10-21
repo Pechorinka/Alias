@@ -68,9 +68,9 @@ class TeamCell: UITableViewCell {
         toolBar.tintColor = .purple
         let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
         let doneButton = UIBarButtonItem(title: "Готово", style: UIBarButtonItem.Style.done, target: self, action: #selector(self.donePressed))
-        let cancelButton = UIBarButtonItem(title: "Отменить", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancelPressed))
+        let cancelButton = UIBarButtonItem(title: "Отмена", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.cancelPressed))
 
-        toolBar.setItems([doneButton, spaceButton, cancelButton], animated: false)
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: false)
          toolBar.isUserInteractionEnabled = true
          toolBar.sizeToFit()
          teamLabel.inputAccessoryView = toolBar
@@ -83,10 +83,10 @@ class TeamCell: UITableViewCell {
             self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            self.myView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 16),
+            self.myView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 8),
             self.myView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             self.myView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -16),
-            self.myView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            self.myView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -8),
             
             self.teamLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24),
             self.teamLabel.centerYAnchor.constraint(equalTo: self.myView.centerYAnchor),

@@ -28,7 +28,7 @@ class TeamsMenuView: UIView {
          tableView.backgroundColor = .white
          tableView.translatesAutoresizingMaskIntoConstraints = false
          tableView.register(TeamCell.self, forCellReuseIdentifier: "TeamCell")
-        tableView.register(PlusCell.self, forCellReuseIdentifier: "PlusCell")
+         tableView.register(PlusCell.self, forCellReuseIdentifier: "PlusCell")
          tableView.register(UITableViewCell.self, forCellReuseIdentifier: "DefaultCell")
          tableView.delegate = self
          tableView.separatorStyle = .none
@@ -156,10 +156,44 @@ extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
     }
     
     internal func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10 // это расстояние, а не кол-во команд
+        return 100 // это расстояние, а не кол-во команд
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if teams.count != 2 {
+            if editingStyle == .delete {
+                tableView.beginUpdates()
+                let team = self.teams[indexPath.section]
+                self.deleteTeam?(indexPath.section, team.name)
+                tableView.deleteSections([indexPath.section], with: .left)
+                tableView.endUpdates()
+                print (team.name)
+            }
+        }
+        
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteButton = UITableViewRowAction(style: .default, title: "Удалить") { (action, indexPath) in
+            self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
+            return
+        }
+        deleteButton.backgroundColor = UIColor.black
+        let buttonStyle = UIButton.appearance()
+
+        let font = UIFont(name: "Phosphate-Solid", size: 16.0)!
+        let string = NSAttributedString(string: "Удалить", attributes: [NSAttributedString.Key.font : font, NSAttributedString.Key.foregroundColor : UIColor.white])
+        buttonStyle.setAttributedTitle(string, for: .normal)
+
+        return [deleteButton]
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
