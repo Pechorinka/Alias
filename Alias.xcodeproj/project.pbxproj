@@ -462,7 +462,7 @@
 				77448C9E289020C20040A442 /* Sources */,
 				77448C9F289020C20040A442 /* Frameworks */,
 				77448CA0289020C20040A442 /* Resources */,
-				2CF0FD542E104CE50B41051A /* [CP] Embed Pods Frameworks */,
+				8C048E4BC913D1C5881BF1D8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -533,23 +533,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2CF0FD542E104CE50B41051A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Alias/Pods-Alias-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Alias/Pods-Alias-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Alias/Pods-Alias-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		66712BA4F888762F0A5A19D2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -570,6 +553,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C048E4BC913D1C5881BF1D8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Alias/Pods-Alias-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Alias/Pods-Alias-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Alias/Pods-Alias-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -608,7 +608,6 @@
 				9FBD47B128927C0000687891 /* ScoreCell.swift in Sources */,
 				77448CE2289229F90040A442 /* CategoryChoiceModel.swift in Sources */,
 				38261E7828F2CA760075BD08 /* WordsCheckCell.swift in Sources */,
-				77448CE2289229F90040A442 /* CategoryChoiceModel.swift in Sources */,
 				77CF5EC32895BEFC001C9A2F /* MyCustomBackButton.swift in Sources */,
 				77448CE4289229F90040A442 /* GameKitViewController.swift in Sources */,
 				77448D102892DCF20040A442 /* CustomViewController.swift in Sources */,
