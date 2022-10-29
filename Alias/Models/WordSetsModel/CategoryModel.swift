@@ -1,10 +1,6 @@
 
 import Foundation
 
-//struct WordSetsModels: Codable {
-//    let level: [CategoryModel]
-//}
-
 struct CategoryModel: Codable {
     let title: String
     let image: String
@@ -12,5 +8,13 @@ struct CategoryModel: Codable {
     let description: String
     let example: String
     let words: [String]
+}
+
+extension CategoryModel {
+    
+    var isMixCategory: Bool {
+        self.title.lowercased() == "микс"
+    }
+    
 }
 

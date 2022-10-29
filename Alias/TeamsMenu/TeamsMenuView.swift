@@ -99,7 +99,7 @@ extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section < teams.count {
+        if indexPath.section < self.teams.count {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamCell", for: indexPath) as! TeamCell
         
             let team = self.teams[indexPath.section]
@@ -128,7 +128,7 @@ extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
                 self.tableView.reloadData()
             }
             
-            if teams.count == 2 {
+            if self.teams.count == 2 {
                 cell.crossImage.isHidden = true
             } else {
                 cell.crossImage.isHidden = false
@@ -198,7 +198,7 @@ extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if teams.count == maxNumberOfTeams {
+        if self.teams.count == self.maxNumberOfTeams {
             return self.teams.count
         }
         else {
@@ -208,7 +208,7 @@ extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
 
 //Передает пуш делегату в TeamMenuViewController
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == teams.count {
+        if indexPath.section == self.teams.count {
             self.addNewTeam?()
             self.tableView.reloadData()
             tableView.scrollToRow(at: indexPath, at: .top, animated: true)

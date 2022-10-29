@@ -8,7 +8,6 @@ final class GameKitViewController: CustomViewController {
     private lazy var choiceModel = CategoryChoiceModel()
     private let musicManager = MusicModel()
     lazy var teams = [Team]()
-//    lazy var gameWords: [String] = self.difficultyChoiceModel.getWords()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,30 +44,25 @@ extension GameKitViewController: TapButtonDelegate {
     func didForwardChoice() {
         self.choiceModel.makeForwardChoice()
         self.musicManager.playSound(soundName: "Transition")
-//        self.gameWords = self.difficultyChoiceModel.getWords()
         self.updateUI()
     }
 
     func didBackChoice() {
         self.choiceModel.makeBackChoice()
         self.musicManager.playSound(soundName: "Transition")
-//        self.gameWords = self.difficultyChoiceModel.getWords()
         self.updateUI()
     }
 
     func didMakeChoice() {
-        let vc = CategoryViewController()
+
+        let wordSet: CategoryChoiceModel.WordSetType
 
         if gameKitViuw.choiceImageView.image == UIImage(named: "Classic") {
-            vc.categories = choiceModel.loadCategories(words: .classic)
+            wordSet = .classic
         } else {
-            vc.categories = choiceModel.loadCategories(words: .theme)
+            wordSet = .theme
         }
+        let vc = CategoryViewController(teams: self.teams, wordSet: wordSet)
         navigationController?.pushViewController(vc, animated: true)
-
-        //        let vc = ScoreViewController(
-        //            teams: self.teams,
-        //            gameWords: self.gameWords
-        //        )
     }
 }

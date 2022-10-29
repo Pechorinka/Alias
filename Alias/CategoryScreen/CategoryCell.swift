@@ -1,26 +1,8 @@
-//
-//  CategoryCell.swift
-//  Alias
-//
-//  Created by Юлия Филимонова on 06.09.2022.
-//
 
 import UIKit
 import SkeletonView
 
 class CategoryCell: UITableViewCell {
-
-    override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.contentView.backgroundColor = .white
-
-        self.isSkeletonable = true
-        self.setupView()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 
     private lazy var baseView: UIView = {
         let view = UIView()
@@ -111,7 +93,6 @@ class CategoryCell: UITableViewCell {
         return stackView
     }()
 
-
     private lazy var gradientView: CAGradientLayer = {
         let gradient = CAGradientLayer()
         gradient.colors = [UIColor(named: "DarkPurpleColor")!.cgColor,
@@ -134,6 +115,20 @@ class CategoryCell: UITableViewCell {
         return shape
     }()
 
+    
+    override init (style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.contentView.backgroundColor = .white
+
+        self.isSkeletonable = true
+        self.setupView()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    //Обязательно тащить модель в настройки ячейки?! Мб задать все эти свойства через инициализатор в CategoryView
     func configureCell(cell: CategoryModel) {
         self.categoryImageView.image = UIImage(named: cell.image)
         self.levelNameLabel.text = cell.title
@@ -161,7 +156,6 @@ class CategoryCell: UITableViewCell {
         self.baseView.layer.borderWidth = 0
     }
     
-
     private func setupView () {
         self.addSubview(contentView)
         [

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                return StartMenuViewController()
 //            }
 //        }()
-
+        
         window?.rootViewController = AppNavigationController(rootViewController: StartMenuViewController())
 
 //        window?.rootViewController = AppNavigationController(rootViewController: rootVC)

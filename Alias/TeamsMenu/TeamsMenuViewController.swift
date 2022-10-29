@@ -4,11 +4,11 @@ import UIKit
 class TeamsMenuViewController: CustomViewController {
     
     private let alertManager = AlertForChangeTeamName()
-    override var nameViewControler: String { "КОМАНДЫ" }
-    let minNumberOfTeams: Int
-    let maxNumberOfTeams: Int
-    
     private let musicManager = MusicModel()
+    private let teamsCreator = Teams()
+    private let minNumberOfTeams: Int
+    private let maxNumberOfTeams: Int
+    override var nameViewControler: String { "КОМАНДЫ" }
     
     var teams: [Team] = [] {
         didSet {
@@ -22,8 +22,6 @@ class TeamsMenuViewController: CustomViewController {
         teams: self.teams
     )
     
-    private let teamsCreator = Teams()
-    
     init(minNumberOfTeams: Int, maxNumberOfTeams: Int) {
         self.minNumberOfTeams = minNumberOfTeams
         self.maxNumberOfTeams = maxNumberOfTeams
@@ -33,7 +31,6 @@ class TeamsMenuViewController: CustomViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +79,7 @@ class TeamsMenuViewController: CustomViewController {
             self.teams[num!] = self.teamsCreator.makeNewTeamName(oldName: oldN!, newName: newN!)
         }
         
-        teamsMenuView.nextVC = {
+        self.teamsMenuView.nextVC = {
             [weak self] in
             guard let self = self else { return }
             

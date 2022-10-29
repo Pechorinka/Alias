@@ -12,7 +12,6 @@ class RulesModel {
             let data = try Data(contentsOf: modelURL)
             let decoder = PropertyListDecoder()
             models = try decoder.decode([RuleModel].self, from: data)
-            print("models \(models)")
         } catch {
             print(error)
         }
