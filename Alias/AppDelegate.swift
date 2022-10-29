@@ -10,17 +10,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = .white
         
-        let rootVC: UIViewController = {
-            let isFirstAppStartup = Core.shared.isFirstAppStartup
-            if isFirstAppStartup {
-                return RulesViewOnebording(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-            } else {
-                return StartMenuViewController()
-            }
-        }()
+//        let rootVC: UIViewController = {
+//            let isFirstAppStartup = Core.shared.isFirstAppStartup
+//            if isFirstAppStartup {
+//                return RulesViewOnebording(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+//            } else {
+//                return StartMenuViewController()
+//            }
+//        }()
         
-//        window?.rootViewController = AppNavigationController(rootViewController: rootVC)
-        window?.rootViewController = WordsCheckViewController()
+        window?.rootViewController = AppNavigationController(rootViewController: StartMenuViewController())
+//        window?.rootViewController = WordsCheckViewController()
         window?.makeKeyAndVisible()
         
         return true
