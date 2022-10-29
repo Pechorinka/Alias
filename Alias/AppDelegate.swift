@@ -18,8 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                return StartMenuViewController()
 //            }
 //        }()
-        
+
         window?.rootViewController = AppNavigationController(rootViewController: StartMenuViewController())
+
+//        window?.rootViewController = AppNavigationController(rootViewController: rootVC)
 //        window?.rootViewController = WordsCheckViewController()
         window?.makeKeyAndVisible()
         
