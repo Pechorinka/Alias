@@ -133,22 +133,14 @@ final class GameKitView: UIView {
         return labelStackView
     }()
 
-     private lazy var bottomButton: UIButton = {
-        let bottomButton = UIButton()
-        bottomButton.translatesAutoresizingMaskIntoConstraints = false
-        bottomButton.backgroundColor = .black
-        bottomButton.setTitle("Далее", for: .normal)
-        bottomButton.titleLabel?.font = UIFont(name: "Phosphate-Solid", size: 24)
-        bottomButton.titleLabel?.textColor = .white
-        bottomButton.layer.cornerRadius = 16
-        bottomButton.addTarget(self, action: #selector(didTapBottomButton), for: .touchUpInside)
-        bottomButton.startAnimatingPressActions()
+     private lazy var bottomButton: CustomButton = {
+         let bottomButton = CustomButton(color: .black, title: "Далее", titleColor: .white, buttonHandler: {
+             [weak self] in
+             guard let self = self else { return }
+             self.delegate?.didMakeChoice()
+         })
         return bottomButton
     }()
-
-    @objc private func didTapBottomButton() {
-        self.delegate?.didMakeChoice()
-    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

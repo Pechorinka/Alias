@@ -15,11 +15,9 @@ class CustomButton: UIView {
                                           title: title,
                                           titleColor: titleColor)
         self.buttonHandler = buttonHandler
-        
         super.init(frame: .zero)
-        
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.button.addTarget(self, action: #selector(self.keyPressed), for: .touchUpInside)
-        
         self.setupView()
     }
     

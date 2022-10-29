@@ -19,7 +19,7 @@ class TeamsMenuView: UIView {
     
     var addNewTeam :(() -> Void)?
     var deleteTeam :((Int?, String?) -> Void)?
-    var nextVC :(() -> Void)?
+    var nextVCС :(() -> Void)?
     var renameTeam :((Int?, String?, String?) -> Void)?
     
     lazy var tableView: UITableView = {
@@ -36,16 +36,12 @@ class TeamsMenuView: UIView {
      } ()
     
 
-    private lazy var nextButton: UIButton = {
-        let btn = UIButton()
-        btn.backgroundColor = .black
-        btn.setTitle("Далее", for: .normal)
-        btn.titleLabel?.font = UIFont(name: "Phosphate-Solid", size: 24)
-        btn.titleLabel?.textColor = .white
-        btn.layer.cornerRadius = 16
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
-        btn.startAnimatingPressActions()
+    private lazy var nextButton: CustomButton = {
+        let btn = CustomButton(color: .black, title: "Далее", titleColor: .white, buttonHandler: {
+            [weak self] in
+            guard let self = self else { return }
+            self.nextVCС?()
+        })
         return btn
     }()
     
@@ -66,8 +62,8 @@ class TeamsMenuView: UIView {
     private func setupUI() {
         
         self.overrideUserInterfaceStyle = .light
-        addSubview(self.tableView)
         
+        addSubview(self.tableView)
         addSubview(self.nextButton)
         
         NSLayoutConstraint.activate([
@@ -88,11 +84,6 @@ class TeamsMenuView: UIView {
         self.addNewTeam?()
         self.tableView.reloadData()
     }
-    
-    @objc func didTapNextButton() {
-        self.nextVC?()
-    }
-    
 }
 
 extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
