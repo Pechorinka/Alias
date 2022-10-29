@@ -157,9 +157,9 @@ class RulesView: UIView {
 
         NSLayoutConstraint.activate([
             self.backgroundView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 10.0),
-            self.backgroundView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 10.0),
             self.backgroundView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -10.0),
-            self.backgroundView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -50.0),
+            self.backgroundView.topAnchor.constraint(equalTo: self.topAnchor, constant: 80.0),
+            self.backgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -80.0),
             
             self.customNavigationBarStack.centerXAnchor.constraint(equalTo: self.backgroundView.centerXAnchor),
             self.customNavigationBarStack.widthAnchor.constraint(equalTo: self.backgroundView.widthAnchor, constant: -40.0),
