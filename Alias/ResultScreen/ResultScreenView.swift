@@ -99,22 +99,14 @@ class ResultScreenView: UIView {
         return resultTableView
     } ()
 
-    private lazy var bottomButton: UIButton = {
-        let bottomButton = UIButton()
-        bottomButton.translatesAutoresizingMaskIntoConstraints = false
-        bottomButton.backgroundColor = .black
-        bottomButton.setTitle("Новая игра", for: .normal)
-        bottomButton.titleLabel?.font = UIFont(name: "Phosphate-Solid", size: 24)
-        bottomButton.titleLabel?.textColor = .white
-        bottomButton.layer.cornerRadius = 16
-        bottomButton.addTarget(self, action: #selector(didTapBottomButton), for: .touchUpInside)
-        bottomButton.startAnimatingPressActions()
+    private lazy var bottomButton: CustomButton = {
+        let bottomButton = CustomButton(color: .black, title: "Новая игра", titleColor: .white, buttonHandler: {
+            [weak self] in
+            guard let self = self else { return }
+            self.backStartVC?()
+        })
         return bottomButton
     }()
-
-    @objc private func didTapBottomButton() {
-        self.backStartVC?()
-    }
 
     init(finalists: [Team]) {
         self.winner = finalists.first!

@@ -79,7 +79,7 @@ class TeamsMenuViewController: CustomViewController {
             self.teams[num!] = self.teamsCreator.makeNewTeamName(oldName: oldN!, newName: newN!)
         }
         
-        self.teamsMenuView.nextVC = {
+        self.teamsMenuView.nextVCС = {
             [weak self] in
             guard let self = self else { return }
             

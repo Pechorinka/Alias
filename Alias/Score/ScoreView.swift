@@ -82,17 +82,12 @@ class ScoreView: UIView {
         return view
     } ()
     
-    private lazy var goToGameButton: UIButton = {
-        let btn = UIButton()
-        btn.backgroundColor = .black
-        btn.setTitle("ПОЕХАЛИ", for: .normal)
-        btn.titleLabel?.font = UIFont(name: "Phosphate-Solid", size: 24)
-        btn.titleLabel?.textColor = .white
-        btn.layer.cornerRadius = 16
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        btn.addTarget(self, action: #selector(startGame), for: .touchUpInside)
-        btn.startAnimatingPressActions()
-        
+    private lazy var goToGameButton: CustomButton = {
+        let btn = CustomButton(color: .black, title: "ПОЕХАЛИ", titleColor: .white, buttonHandler: {
+            [weak self] in
+            guard let self = self else { return }
+            self.gameButtonTap?()
+        })        
         return btn
     }()
     
@@ -107,10 +102,6 @@ class ScoreView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc private func startGame(){
-        self.gameButtonTap?()
     }
 }
 
