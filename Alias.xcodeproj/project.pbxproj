@@ -95,7 +95,7 @@
 		38C8AA8828C7BA6D007EFB12 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		38C8AA8F28C7CDAE007EFB12 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		45EBEF24E1D33486B90EFD2B /* Pods_Alias.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Alias.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F90BBDE3C663BD8E9FCAB04 /* Pods-Alias.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alias.debug.xcconfig"; path = "Target Support Files/Pods-Alias/Pods-Alias.debug.xcconfig"; sourceTree = "<group>"; };
+		622BEC4BB432F3B7BA05A68C /* Pods-Alias.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alias.release.xcconfig"; path = "Target Support Files/Pods-Alias/Pods-Alias.release.xcconfig"; sourceTree = "<group>"; };
 		7744566628D219F600B376E0 /* RulesViewOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesViewOnboarding.swift; sourceTree = "<group>"; };
 		7744566828D5D27F00B376E0 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
 		77448CA2289020C20040A442 /* Alias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alias.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,7 +159,7 @@
 		9FBD47AC289270A200687891 /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
 		9FBD47AE28927B4700687891 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		9FBD47B028927C0000687891 /* ScoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCell.swift; sourceTree = "<group>"; };
-		F11E70EEE88BFC3550E9F221 /* Pods-Alias.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alias.release.xcconfig"; path = "Target Support Files/Pods-Alias/Pods-Alias.release.xcconfig"; sourceTree = "<group>"; };
+		DE67EB79F0A0084D5956282E /* Pods-Alias.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alias.debug.xcconfig"; path = "Target Support Files/Pods-Alias/Pods-Alias.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +174,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FAE54DDCA588E618540823E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DE67EB79F0A0084D5956282E /* Pods-Alias.debug.xcconfig */,
+				622BEC4BB432F3B7BA05A68C /* Pods-Alias.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		38261E7928F2CA820075BD08 /* WordsCheck */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,22 +213,13 @@
 			path = CategoryScreen;
 			sourceTree = "<group>";
 		};
-		3AF460B5FA931B987C0547FE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				6F90BBDE3C663BD8E9FCAB04 /* Pods-Alias.debug.xcconfig */,
-				F11E70EEE88BFC3550E9F221 /* Pods-Alias.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		77448C99289020C20040A442 = {
 			isa = PBXGroup;
 			children = (
 				77448CA4289020C20040A442 /* Alias */,
 				77CF5EA628945B16001C9A2F /* Recovered References */,
-				3AF460B5FA931B987C0547FE /* Pods */,
 				AD682B41937B4F8AA7C09444 /* Frameworks */,
+				0FAE54DDCA588E618540823E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -788,7 +789,7 @@
 		};
 		77448CB7289020C50040A442 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F90BBDE3C663BD8E9FCAB04 /* Pods-Alias.debug.xcconfig */;
+			baseConfigurationReference = DE67EB79F0A0084D5956282E /* Pods-Alias.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -820,7 +821,7 @@
 		};
 		77448CB8289020C50040A442 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F11E70EEE88BFC3550E9F221 /* Pods-Alias.release.xcconfig */;
+			baseConfigurationReference = 622BEC4BB432F3B7BA05A68C /* Pods-Alias.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
