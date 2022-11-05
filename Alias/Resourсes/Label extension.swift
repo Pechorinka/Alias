@@ -34,3 +34,15 @@ extension UILabel {
         return lbl
     }
 }
+
+class UILabelWithInsets: UILabel {
+    public var textInsets: UIEdgeInsets = UIEdgeInsets.zero {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: textInsets))
+    }
+}
