@@ -3,10 +3,14 @@ import UIKit
 
 final class GameScreenView: UIView {
     
+    // MARK: - Closures
+    
     var rightButtonTap: (() -> Void)?
     var wrongButtonTap: (() -> Void)?
     var backButtonTap: (() -> Void)?
     
+    
+    // Осталось времени
     var remainingSeconds: TimeInterval = 0 {
         didSet {
             self.secondsLabel.text = self.formatter.string(from: .init(value: self.remainingSeconds))
@@ -16,6 +20,8 @@ final class GameScreenView: UIView {
             )
         }
     }
+    
+    //MARK: - Private properties
     
     private var formatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -175,12 +181,9 @@ final class GameScreenView: UIView {
     
     private func setupConstraints() {
 //        backCardView.addSubview(gameImage)
-        addSubview(backButton)
-        addSubview(secondsStack)
-        addSubview(backCardView)
-        addSubview(gameCardView)
+        
+        [backButton, secondsStack, backCardView, gameCardView, buttonsStack].forEach{self.addSubview($0)}
         gameCardView.addSubview(self.gameWordLabel)
-        addSubview(buttonsStack)
         
         NSLayoutConstraint.activate([
             

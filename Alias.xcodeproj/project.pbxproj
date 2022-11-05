@@ -80,6 +80,7 @@
 		9FBD47AD289270A200687891 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBD47AC289270A200687891 /* ScoreViewController.swift */; };
 		9FBD47AF28927B4700687891 /* ScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBD47AE28927B4700687891 /* ScoreView.swift */; };
 		9FBD47B128927C0000687891 /* ScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FBD47B028927C0000687891 /* ScoreCell.swift */; };
+		FA6FD90929167AEC00620358 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6FD90829167AEB00620358 /* ConfettiView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -160,6 +161,7 @@
 		9FBD47AE28927B4700687891 /* ScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreView.swift; sourceTree = "<group>"; };
 		9FBD47B028927C0000687891 /* ScoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCell.swift; sourceTree = "<group>"; };
 		F11E70EEE88BFC3550E9F221 /* Pods-Alias.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Alias.release.xcconfig"; path = "Target Support Files/Pods-Alias/Pods-Alias.release.xcconfig"; sourceTree = "<group>"; };
+		FA6FD90829167AEB00620358 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,6 +405,7 @@
 		77CF5EBB289557DB001C9A2F /* Resourсes */ = {
 			isa = PBXGroup;
 			children = (
+				FA6FD90829167AEB00620358 /* ConfettiView.swift */,
 				77CF5ED628997B83001C9A2F /* String+FitPluralForm.swift */,
 				77CF5EC4289691F9001C9A2F /* UIView+Constraints.swift */,
 				77F3A1252904582E00815D10 /* Label extension.swift */,
@@ -621,6 +624,7 @@
 				77CF5EC5289691F9001C9A2F /* UIView+Constraints.swift in Sources */,
 				77F3A12C29046CF300815D10 /* CustomCountabelBoolItemSettingsView.swift in Sources */,
 				77448CD02891499E0040A442 /* RulesViewController.swift in Sources */,
+				FA6FD90929167AEC00620358 /* ConfettiView.swift in Sources */,
 				77CF5ECA2896C213001C9A2F /* GameEngine.swift in Sources */,
 				38C8AA8728C7B8A3007EFB12 /* CategoryView.swift in Sources */,
 				77568D7528D8A03E00D0F6E5 /* RulesModel.swift in Sources */,
