@@ -3,10 +3,14 @@ import UIKit
 
 final class GameScreenView: UIView {
     
+    // MARK: - Closures
+    
     var rightButtonTap: (() -> Void)?
     var wrongButtonTap: (() -> Void)?
     var backButtonTap: (() -> Void)?
     
+    
+    // Осталось времени
     var remainingSeconds: TimeInterval = 0 {
         didSet {
             self.secondsLabel.text = self.formatter.string(from: .init(value: self.remainingSeconds))
@@ -16,6 +20,8 @@ final class GameScreenView: UIView {
             )
         }
     }
+    
+    //MARK: - Private properties
     
     private var formatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -27,6 +33,7 @@ final class GameScreenView: UIView {
     
     private let round: GameRound
     private let musicManager = MusicModel()
+    private var panGesture = UIPanGestureRecognizer()
     
     // MARK: - UI elements
     
@@ -83,11 +90,34 @@ final class GameScreenView: UIView {
         return label
     }()
     
+    private lazy var backCardView: UIView = {
+        let backView = UIView()
+        backView.translatesAutoresizingMaskIntoConstraints = false
+        backView.layer.cornerRadius = 25
+        backView.layer.borderColor = UIColor.black.cgColor
+        backView.layer.borderWidth = 3
+        backView.backgroundColor = .lightGray
+        backView.layer.shadowColor = UIColor.black.cgColor
+        backView.layer.shadowOpacity = 0.5
+        backView.layer.shadowOffset = .zero
+        backView.layer.shadowRadius = 3
+        return backView
+    }()
+    
     // Картинка карточки (игровое поле)
-    private lazy var gameImage: UIImageView = {
-        let image = UIImageView(image: UIImage(named: "imageForWord"))
-        image.addSubview(self.gameWordLabel)
-        return image
+    
+    private lazy var gameCardView: UIView = {
+        let cardView = UIView()
+        cardView.translatesAutoresizingMaskIntoConstraints = false
+        cardView.layer.cornerRadius = 25
+        cardView.layer.borderColor = UIColor.black.cgColor
+        cardView.layer.borderWidth = 3
+        cardView.layer.shadowColor = UIColor.black.cgColor
+        cardView.layer.shadowOpacity = 0.5
+        cardView.layer.shadowOffset = .zero
+        cardView.layer.shadowRadius = 3
+ 
+        return cardView
     }()
     
     // Кнопка правильного ответа
@@ -124,30 +154,14 @@ final class GameScreenView: UIView {
         return stack
     }()
     
-    // Стэк общий
-    private lazy var contentStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews:
-                                    [
-                                        self.secondsStack,
-                                        self.gameImage,
-                                        self.buttonsStack
-                                    ])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.spacing = 40
-        stack.distribution = .fill
-        return stack
-    }()
-    
     // MARK: - Initialization
     
     init(round: GameRound) {
         self.round = round
         super .init(frame: .zero)
         
-        self.setupUI()
-        gestureObserver()
+        setupUI()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -155,41 +169,46 @@ final class GameScreenView: UIView {
     }
     
     // MARK: - Private methods
-    
-    private func gestureObserver() {
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(elementSwippedLeft(gesture:)))
-        swipeLeft.direction = UISwipeGestureRecognizer.Direction.left
-        self.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(elementSwippedRight(gesture:)))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.addGestureRecognizer(swipeRight)
-    }
-    
+
     private func setupUI() {
         
         self.backgroundColor = .white
-        addSubview(self.contentStack)
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(panCard))
         
-        self.addSubview(self.backButton)
+        gameCardView.addGestureRecognizer(panGesture)
+        gameCardView.backgroundColor = .white
+    }
+    
+    private func setupConstraints() {
+//        backCardView.addSubview(gameImage)
+        
+        [backButton, secondsStack, backCardView, gameCardView, buttonsStack].forEach{self.addSubview($0)}
+        gameCardView.addSubview(self.gameWordLabel)
         
         NSLayoutConstraint.activate([
             
             self.backButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 24),
             self.backButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 24),
             
-            self.contentStack.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-            self.contentStack.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
-            self.contentStack.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor),
-            self.contentStack.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor),
+            self.secondsStack.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            self.secondsStack.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             
-            self.gameImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 2/3),
+            self.gameCardView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 2/3),
+            self.gameCardView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
+            self.gameCardView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.gameCardView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
-            self.gameWordLabel.centerXAnchor.constraint(equalTo: self.gameImage.centerXAnchor),
-            self.gameWordLabel.centerYAnchor.constraint(equalTo: self.gameImage.centerYAnchor),
-            self.gameWordLabel.widthAnchor.constraint(equalTo: self.gameImage.widthAnchor, constant: -24),
+            self.backCardView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 2/3),
+            self.backCardView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
+            self.backCardView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.backCardView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
+            self.gameWordLabel.centerXAnchor.constraint(equalTo: self.gameCardView.centerXAnchor),
+            self.gameWordLabel.centerYAnchor.constraint(equalTo: self.gameCardView.centerYAnchor),
+            self.gameWordLabel.widthAnchor.constraint(equalTo: self.gameCardView.widthAnchor, constant: -24),
+            
+            self.buttonsStack.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
+            self.buttonsStack.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             self.wrongAnswerBtn.widthAnchor.constraint(equalToConstant: 112),
             self.wrongAnswerBtn.heightAnchor.constraint(equalToConstant: 108),
             self.rightAnswerBtn.widthAnchor.constraint(equalToConstant: 112),
@@ -197,6 +216,7 @@ final class GameScreenView: UIView {
         ])
     }
     
+    // Анимация бэкграунда если пользуемся кнопками
     private func addBackgroundAnimation(duration: Double, backgroundColor: UIColor) {
         UIView.animate(withDuration: duration, delay: 0.0, animations: {
             self.backgroundColor = backgroundColor
@@ -207,24 +227,69 @@ final class GameScreenView: UIView {
     
     // MARK: - Actions
     
-    @objc private func rightAnswer(){
-        //
-        //
-        //        UIView.animate(withDuration: 0.2, delay: 0, options: [.curveLinear]) {
-        //            self.gameImage.transform = CGAffineTransform(rotationAngle: -100)
-        //        } completion: { _ in
-        //            self.gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
-        //            self.gameImage.transform = .identity
-        //        }
+    @objc func panCard(_ sender: UIPanGestureRecognizer) {
+      guard let card = sender.view else { return }
+      let point = sender.translation(in: self)
+      card.center = CGPoint(x: self.center.x + point.x, y: self.center.y + point.y)
+      let xFromCenter = card.center.x - self.center.x
+      let absXFromCenter = abs(xFromCenter)
+      let isRight = xFromCenter > 0
+      var scale: CGFloat = 1.0
+      if absXFromCenter > 100 {
+        scale = 100 / absXFromCenter
+      }
+//      backCardView.alpha = absXFromCenter / self.center.x /
+        self.gameCardView.backgroundColor = isRight ? .green : .red
+      
+      card.transform = CGAffineTransform(rotationAngle: xFromCenter / (self.frame.height - card.center.y)).scaledBy(x: scale, y: scale)
+      if sender.state == UIGestureRecognizer.State.ended {
         
-        gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
+        if card.center.x < 75 {
+          UIView.animate(withDuration: 0.2, animations: {
+            card.center = CGPoint(x: card.center.x - 200, y: card.center.y + 75)
+            card.alpha = 0
+          }) { _ in
+            self.resetCard()
+              DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+              card.alpha = 1
+                self.wrongButtonTap?()
+            }
+          }
+        } else if card.center.x > (self.frame.width - 75) {
+          
+          UIView.animate(withDuration: 0.2, animations: {
+            card.center = CGPoint(x: card.center.x + 200, y: card.center.y + 75)
+            card.alpha = 0
+          }) { _ in
+            self.resetCard()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+              card.alpha = 1
+                self.rightButtonTap?()
+            }
+          }
+        } else {
+          resetCard()
+        }
+      }
+    }
+    
+    func resetCard() {
+      UIView.animate(withDuration: 0.2) {
+        self.gameCardView.center = self.center
+          self.gameCardView.backgroundColor = .white
+        self.gameCardView.transform = .identity
+      }
+    }
+    
+    @objc private func rightAnswer(){
+        gameCardView.swipeAnimation(transition: CATransitionSubtype.fromLeft)
         addBackgroundAnimation(duration: 0.3, backgroundColor: .green)
         self.rightButtonTap?()
     }
     
     @objc private func wrongAnswer(){
         
-        gameImage.swipeAnimation(transition: CATransitionSubtype.fromRight)
+        gameCardView.swipeAnimation(transition: CATransitionSubtype.fromRight)
         addBackgroundAnimation(duration: 0.1, backgroundColor: .red)
         self.wrongButtonTap?()
     }
@@ -235,7 +300,7 @@ final class GameScreenView: UIView {
     
     @objc private func elementSwippedRight(gesture: UIGestureRecognizer) {
         
-        gameImage.swipeAnimation(transition: CATransitionSubtype.fromLeft)
+        gameCardView.swipeAnimation(transition: CATransitionSubtype.fromLeft)
         addBackgroundAnimation(duration: 0.1, backgroundColor: .green)
         rightButtonTap?()
         
@@ -243,7 +308,7 @@ final class GameScreenView: UIView {
     
     @objc private func elementSwippedLeft(gesture: UIGestureRecognizer) {
         
-        gameImage.swipeAnimation(transition: CATransitionSubtype.fromRight)
+        gameCardView.swipeAnimation(transition: CATransitionSubtype.fromRight)
         addBackgroundAnimation(duration: 0.1, backgroundColor: .red)
         wrongButtonTap?()
     }

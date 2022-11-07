@@ -30,7 +30,7 @@ class CustomButton: UIView {
     }
     
     private func setupView() {
-        
+        self.button.translatesAutoresizingMaskIntoConstraints = false
         addSubview(button)
         
         NSLayoutConstraint.activate([
