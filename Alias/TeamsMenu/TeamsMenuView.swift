@@ -172,19 +172,21 @@ extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteButton = UITableViewRowAction(style: .default, title: "Удалить") { (action, indexPath) in
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Удалить", handler: { (action, view, success)  in
+
             self.tableView.dataSource?.tableView!(self.tableView, commit: .delete, forRowAt: indexPath)
-            return
-        }
-        deleteButton.backgroundColor = UIColor.black
-        let buttonStyle = UIButton.appearance()
+        })
+        deleteAction.backgroundColor = UIColor.black
+        
+        let label = UILabel()
+        label.text = "Удалить"
+        label.textColor = .white
+        label.font = UIFont(name: "Phosphate-Solid", size: 16.0)!
+        label.sizeToFit()
+        deleteAction.image = UIImage(view: label)
 
-        let font = UIFont(name: "Phosphate-Solid", size: 16.0)!
-        let string = NSAttributedString(string: "Удалить", attributes: [NSAttributedString.Key.font : font, NSAttributedString.Key.foregroundColor : UIColor.white])
-        buttonStyle.setAttributedTitle(string, for: .normal)
-
-        return [deleteButton]
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -210,5 +212,21 @@ extension TeamsMenuView: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+}
+
+extension UIImage {
+    convenience init?(view: UIView) {
+
+        let renderer = UIGraphicsImageRenderer(bounds: view.bounds)
+        let image = renderer.image { rendererContext in
+            view.layer.render(in: rendererContext.cgContext)
+        }
+
+        if let cgImage = image.cgImage {
+            self.init(cgImage: cgImage, scale: UIScreen.main.scale, orientation: .up)
+        } else {
+            return nil
+        }
+    }
 }
 

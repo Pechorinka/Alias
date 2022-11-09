@@ -101,17 +101,6 @@ extension TeamsMenuViewController: PresentAlertDelegate {
     }
 }
 
-//MARK: - NewNameDelegate
-//Замена ячейки по индексу - переименование команды // Удалить?
-/*extension TeamsMenuViewController: NewNameDelegate {
-    func renameTeam(name: String) {
-        guard let index = self.teamsMenuView.sectionToRename else {return}
-        self.teams.remove(at: index)
-        self.teams.insert(self.teamsCreator.makeNewTeamName(name: name), at: index)
-    }
-}
-*/
-
 //MARK: - PopOver
 
 extension TeamsMenuViewController: UIPopoverPresentationControllerDelegate {
